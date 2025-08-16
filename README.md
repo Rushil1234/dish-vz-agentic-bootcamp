@@ -14,10 +14,10 @@ A large telecommunications provider, faces frequent challenges in its Network Op
 ## Objective  
 The objective is to design and implement an **Agentic AI-enabled incident management system** that leverages orchestration of specialized agents. The solution will allow a NOC Supervisor to:  
 
-- Query server and network status in real time.  
-- Diagnose the root cause of network incidents using logs and resolution guides.  
-- Coordinate communications with internal field teams.  
-- Trigger remediation flows when required.  
+- Query server and network status in real time  
+- Diagnose the root cause of network incidents using logs and resolution guides  
+- Coordinate communications with internal field teams  
+- Identify remediation flows when required  
 
 The assistant will serve as a **single conversational interface** (text or voice) for the Supervisor, reducing tool-switching and empowering faster decision-making.  
 
