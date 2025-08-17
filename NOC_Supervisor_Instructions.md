@@ -6,8 +6,8 @@
   - [Table of Contents](#table-of-contents)  
   - [Introduction](#introduction)  
     - [Pre-requisites](#pre-requisites)  
-  - [watsonx Orchestrate (SaaS)](#watsonx-orchestrate-saas)  
-    - [The watsonx Orchestrate console](#the-watsonx-orchestrate-console)  
+  - [Watsonx Orchestrate (SaaS)](#watsonx-orchestrate-saas)  
+    - [Environment Setup](#environment-setup)  
     - [AI Agent Configuration](#ai-agent-configuration)  
     - [The Network Status Agent](#the-network-status-agent)  
     - [The Server Status Agent](#the-server-status-agent)  
@@ -32,5 +32,51 @@ Even though we will take you through a complete and working example, you should 
 
 ### Pre-requisites  
 
+Before starting the lab, make sure you have the following installed and configured on your system:  
+
+1. **Python 3.11**  
+   - Download from [python.org](https://www.python.org/downloads/release/python-3110/).  
+   - Verify installation:  
+     ```bash
+     python3 --version
+     ```  
+
+2. **Git**  
+   - Download from [git-scm.com](https://git-scm.com/downloads).  
+   - Verify installation:  
+     ```bash
+     git --version
+     ```  
+
+3. **Visual Studio Code (VS Code)**  
+   - Download from [code.visualstudio.com](https://code.visualstudio.com/).  
+   - Install recommended extensions:  
+     - *Python* (for coding and debugging).  
+     - *YAML* (for agent and tool configuration files).  
+
+Once these prerequisites are installed, you will be ready to set up the environment and import agents into watsonx Orchestrate.  
+
 - Check with your instructor to make sure **all systems** are up and running before you continue.  
 - If you're an instructor running this lab, check the **Instructor's guides** to set up all environments and systems.  
+
+## Watsonx Orchestrate (SaaS)
+
+Watsonx Orchestrate (wxo) is IBM’s SaaS-based platform for creating, managing, and running AI-driven digital workers and agentic flows.  
+In this bootcamp, you will use the SaaS version of Orchestrate to configure agents, tools, and knowledge sources directly from the web console, without needing to provision infrastructure yourself.  
+
+Key concepts to keep in mind:  
+
+- **Console Access**:  
+  You will log into the Watsonx Orchestrate console using your IBMid. All agent testing and orchestration will happen here.  
+
+- **Agents**:  
+  Each agent encapsulates a role — for example, the *Network Status Agent* queries site/network health, while the *Incident Diagnosis Agent* analyzes logs and suggests root causes.  
+
+- **Tools**:  
+  Tools are Python or API-based functions that agents can call (e.g., checking server status or parsing network logs).  
+
+- **Knowledge Sources**:  
+  Data sources that provide structured domain-specific information through a vectore store (e.g., site network status data)
+
+### Environment Setup
+
