@@ -80,3 +80,10 @@ Key concepts to keep in mind:
 
 ### Environment Setup
 
+(Information about IBMid and cloud account)
+
+#### API Key
+
+1. Go to the [IBM cloud console](https://cloud.ibm.com/) and ensure the dropdown is selected to the right environment.
+
+![alt text](images/api_key_1.jpg)
