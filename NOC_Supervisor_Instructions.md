@@ -82,8 +82,39 @@ Key concepts to keep in mind:
 
 (Information about IBMid and cloud account)
 
+#### Working Locally on the Repository
+
+- Run the following command below to clone the repository. This will give you the foundational resources to complete the bootcamp.
+
+```bash
+  git clone https://github.com/Aditya-Asthana/ai-agentic-bootcamp-vz.git
+```  
+
+- Now open the project folder in vscode, and navigate to the terminal within the project directory.
+![alt text](images/vscode_1.png)
+
+- Once you the terminal appears on your screen, ensure you are in the folder where the contents of the repo live. Now type in the following commnads line by line:
+
+```bash
+  python3.11 -m venv bootcamp_venv
+  source bootcamp_venv/bin/activate
+  pip install ibm-watsonx-orchestrate
+```  
+
+Here, we are creating a virtual environment for our dependencies to live. This allows our agents to work in an isolated workspace with out the interference of other global Python libraries on your device. After, we install the SaaS version of Watsonx Orchestrate so we can import our future agents and tools through the CLI.
+
 #### API Key
 
-1. Go to the [IBM cloud console](https://cloud.ibm.com/) and ensure the dropdown is selected to the right environment.
+1. Go to the [IBM cloud console](https://cloud.ibm.com/) and ensure the right cloud account is selected through the dropdown. Check TechZone to confirm what cloud account you should be in.
 
-![alt text](images/api_key_1.jpg)
+![alt text](images/api_key_1.png)
+
+2. Click the **Manage** Dropdown on the top right and click into **Access (IAM)**.
+
+![alt text](images/api_key_2.png)
+
+3. Next, on the vertical menu on the left hand side of the screen, click into the **API keys** tab. Then click the blue **Create +** button on the side and name the key. Leave the default configurations as is.
+
+![alt text](images/api_key_3.png)
+![alt text](images/api_key_4.png)
+

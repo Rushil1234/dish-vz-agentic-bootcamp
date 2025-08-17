@@ -12,6 +12,7 @@ env/
 .orchestrate_venv/
 .orchestrate_env/
 .orchestrate_virtualenv/
+bootcamp_venv/
 
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints
