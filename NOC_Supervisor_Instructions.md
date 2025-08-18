@@ -103,6 +103,8 @@ Key concepts to keep in mind:
 
 Here, we are creating a virtual environment for our dependencies to live. This allows our agents to work in an isolated workspace with out the interference of other global Python libraries on your device. After, we install the SaaS version of Watsonx Orchestrate so we can import our future agents and tools through the CLI.
 
+- Now we will rename our `.env_example` to `.env` through vscode. To do so, click on the pages icon on the left side and find the `.env_example` file. Right click on the file and rename it to `.env`. This will be a place where we store our credentials so that we can connect to Watsonx Orchestrate.
+
 #### API Key
 
 1. Go to the [IBM cloud console](https://cloud.ibm.com/) and ensure the right cloud account is selected through the dropdown. Check TechZone to confirm what cloud account you should be in.
@@ -113,8 +115,12 @@ Here, we are creating a virtual environment for our dependencies to live. This a
 
 ![alt text](images/api_key_2.png)
 
-3. Next, on the vertical menu on the left hand side of the screen, click into the **API keys** tab. Then click the blue **Create +** button on the side and name the key. Leave the default configurations as is.
+3. Next, on the vertical menu on the left hand side of the screen, click into the **API keys** tab. Then click the blue **Create +** button on the side and name the key. Leave the default configurations as is and click **create**. **Make sure to copy the API key to your clipboard as you can only see this once!**
 
 ![alt text](images/api_key_3.png)
 ![alt text](images/api_key_4.png)
+
+4. Now go back into vscode and find the `.env` file. Paste the API key into the variable that says `WO_API_KEY`.
+
+#### Service Instance URL
 
