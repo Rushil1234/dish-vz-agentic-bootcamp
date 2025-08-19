@@ -1,0 +1,14 @@
+spec_version: v1
+kind: knowledge_base
+name: incident_resolution_guides
+description: >
+  Troubleshooting documentation for resolving common network incident root causes.
+  Covers backhaul failures, power outages, and configuration errors.
+
+documents:
+  - "backhaul_failure_guide.pdf"
+  - "power_outage_guide.pdf"
+  - "config_error_guide.pdf"
+
+vector_index:
+  embeddings_model_name: ibm/slate-125m-english-rtrvr-v2

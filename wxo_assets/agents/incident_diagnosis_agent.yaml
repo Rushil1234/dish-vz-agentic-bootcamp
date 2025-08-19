@@ -1,0 +1,18 @@
+spec_version: v1
+kind: native
+name: incident_diagnosis_agent
+llm: watsonx/meta-llama/llama-3-3-70b-instruct
+style: default
+hidden: false
+description: >
+  The Incident Diagnosis Agent analyzes incident logs and tags them with the most likely root cause and can also provide a resolution plan based on the knowledge source. 
+
+instructions: |
+  - Your final response **must strictly follow this format**:
+  error_type: "insert error type exactly as returned by the tool (Backhaul Failure, Power Outage, Configuration Error)"
+  resolution_plan: "insert resolution plan based on knowledge base content"
+collaborators: []
+tools:
+  - diagnose_incident_log
+knowledge_base:
+  - incident_resolution_guides
