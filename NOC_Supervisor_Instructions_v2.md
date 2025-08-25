@@ -439,10 +439,9 @@ By default, new agents start with “Hello! I am watsonx Orchestrate, an AI assi
   > - Task framing: Tell the agent to summarize the types of requests it can handle (network checks, incident diagnosis, communications).
   > - Override default: Make sure to instruct the agent to fully replace the standard watsonx greeting with this custom introduction.
   > - Constraints: Specify that the agent should not mention IBM or watsonx.
+  > - Tone & personality: You can guide the agent to adopt a professional, supportive, concise, or friendly tone to make the greeting more engaging.
 
-Tone & personality: You can guide the agent to adopt a professional, supportive, concise, or friendly tone to make the greeting more engaging.
-
-✅ The next time you start a chat, the agent should greet with your customized introduction instead of the default Watsonx greeting.
+✅ The next time you start a chat, the agent should greet with your customized introduction instead of the default watsonx Orchestrate greeting.
 
 ---
 
