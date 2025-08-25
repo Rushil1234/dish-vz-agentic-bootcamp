@@ -428,12 +428,19 @@ Try these natural-language prompts to validate routing:
 
 
 #### 5) Bonus Challenge: Override the Default Greeting
-By default, new agents start with “Hi, I am watsonx Orchestrate.” You can override this in the Orchestrate Console. 
+By default, new agents start with “Hello! I am watsonx Orchestrate, an AI assistant, created by IBM. How can I help you today?”. You can override this in the Orchestrate Console. 
 
 1. Go to the Orchestrate Console.
 2. In the left-hand navigation (hamburger menu), go to Build → Agent Builder.
 3. Click on `noc_supervisor_agent` to view its details.
-4. Edit the Instructions in a way it says "Hello, I’m the NOC Supervisor. I can help you check network and server status, diagnose incidents, or draft communications. How can I help you today?"
+4. Edit the Agent Behavior in a way it says "Hello, I’m the NOC Supervisor. I can help you check network and server status, diagnose incidents, or draft communications. How can I help you today?"
+> Here are some things you may want to try: 
+  - Role clarity: Specify to the agent that it should clearly identify itself as the NOC Supervisor.
+  - Task framing: Tell the agent to summarize the types of requests it can handle (network checks, incident diagnosis, communications).
+  - Override default: Make sure to instruct the agent to fully replace the standard watsonx greeting with this custom introduction.
+  - Constraints: Specify that the agent should not mention IBM or watsonx.
+
+Tone & personality: You can guide the agent to adopt a professional, supportive, concise, or friendly tone to make the greeting more engaging.
 
 ✅ The next time you start a chat, the agent should greet with your customized introduction instead of the default Watsonx greeting.
 
