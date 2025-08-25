@@ -435,10 +435,10 @@ By default, new agents start with “Hello! I am watsonx Orchestrate, an AI assi
 3. Click on `noc_supervisor_agent` to view its details.
 4. Edit the Agent Behavior in a way it says "Hello, I’m the NOC Supervisor. I can help you check network and server status, diagnose incidents, or draft communications. How can I help you today?"
 > Here are some things you may want to try: 
-  - Role clarity: Specify to the agent that it should clearly identify itself as the NOC Supervisor.
-  - Task framing: Tell the agent to summarize the types of requests it can handle (network checks, incident diagnosis, communications).
-  - Override default: Make sure to instruct the agent to fully replace the standard watsonx greeting with this custom introduction.
-  - Constraints: Specify that the agent should not mention IBM or watsonx.
+  > - Role clarity: Specify to the agent that it should clearly identify itself as the NOC Supervisor.
+  > - Task framing: Tell the agent to summarize the types of requests it can handle (network checks, incident diagnosis, communications).
+  > - Override default: Make sure to instruct the agent to fully replace the standard watsonx greeting with this custom introduction.
+  > - Constraints: Specify that the agent should not mention IBM or watsonx.
 
 Tone & personality: You can guide the agent to adopt a professional, supportive, concise, or friendly tone to make the greeting more engaging.
 
