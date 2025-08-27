@@ -315,23 +315,18 @@ This tool provides the functionality for the agent to send messages through Outl
 > **Console option (SaaS):** In the Orchestrate console, navigate to **Tools → Add tool → OpenAPI**, then upload `wxo_assets/tools/outlook_email_openapi.json`.
 
 #### 2) Configure Slack connection
-The Slack connection provides the authentication and API endpoint needed for the agent to send messages into Slack.
+The Slack connection enables authentication and provides the API endpoint required for the agent to send messages into Slack.
 
-1. Request a Slack workspace (or use an existing one).
-2. Navigate to https://api.slack.com/apps and create a new app in your workspace from #1. 
-3. Open the app and in the left navigation under **Features**, go to **OAuth & Permissions**.
-4. Scroll down to **Scopes**. Under **Bot Token Scopes**, add the following permissions:
-  - app_mentions:read
-  - chat:write
-  - chat:write.customize
-  - chat:write.public
-  - im:history
-  - im:read
-  - im:write
+1. You will be provided with access to a Slack workspace: <insert_link_here>.
+2. Create a new channel in this workspace. Use the following naming convention:  
+   **agentic-ai-bootcamp-<YOUR_INITIALS><TWO_DIGITS>**  
+   Example: `agentic-ai-bootcamp-aa82`
+3. Open the newly created channel and click on the channel name at the top.
+4. Navigate to **About** → scroll to the bottom → copy the **Channel ID**.
+5. Open `communications_agent.yaml` and replace `{channel_id}` with the Channel ID from the previous step. Save your changes.
 ![alt text](images/slack_connection_1.png)
-4. Under OAuth Tokens, install the app into the workspace.
-5. Copy the Bot User OAuth Token. You will need this for the next step.
-6. Configure and set credentials for both Draft and Live environments:
+6. You will be provided with a **Bot OAuth User Token**. Keep this token ready for the next step.
+7. Configure and set credentials for both **Draft** and **Live** environments.
 
 **Draft environment**
 ```
