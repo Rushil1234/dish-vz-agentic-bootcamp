@@ -93,7 +93,7 @@ Key concepts to keep in mind:
 - Now open the project folder in vscode, and navigate to the terminal within the project directory.
 ![alt text](images/vscode_1.png)
 
-- Once you the terminal appears on your screen, ensure you are in the folder where the contents of the repo live. Now type in the following commnads line by line:
+- [Installing the ADK](https://developer.watson-orchestrate.ibm.com/getting_started/installing#setting-up-and-installing-the-adk): Once you the terminal appears on your screen, ensure you are in the folder where the contents of the repo live. Now type in the following commnads line by line:
 
 ```bash
   python3.11 -m venv bootcamp_venv
@@ -144,9 +144,9 @@ You are now setup to have an API key within watsonx. Next, we will get the Sevic
 
 You now have all your credentials setup. The last thing left to do, is to setup your environment on orchestrate.
 
-1. Go to vscode and open the terminal. Make sure you are in the directory inside the cloned repo. The use the command: `orchestrate env add -n <environment-name> -u <service-instance-url> --type ibm_iam --activate`. Replace the environment-name with a name of your choice, and the service-instance-url with the url from your env file. 
+1. [Creating an environment](https://developer.watson-orchestrate.ibm.com/environment/initiate_environment#creating-an-environment): Go to vscode and open the terminal. Make sure you are in the directory inside the cloned repo. The use the command: `orchestrate env add -n <environment-name> -u <service-instance-url> --type ibm_iam --activate`. Replace the environment-name with a name of your choice, and the service-instance-url with the url from your env file. 
 
-2. Now run `orchestrate env activate <environment-name>` and replace environment-name with the name you chose from before.
+2. [Activating an environment](https://developer.watson-orchestrate.ibm.com/environment/initiate_environment#activating-an-environment): Now run `orchestrate env activate <environment-name>` and replace environment-name with the name you chose from before.
 
 ### AI Agent Configuration  
 
