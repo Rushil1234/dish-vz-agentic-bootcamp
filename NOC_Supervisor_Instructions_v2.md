@@ -1,8 +1,8 @@
-# Use case: NOC Supervisor Assistant
+# Use case: Supervisor Assistant
 
 ## Table of Contents
 
-- [Use case: NOC Supervisor Assistant](#use-case-noc-supervisor-assistant)  
+- [Use case: Supervisor Assistant](#use-case-noc-supervisor-assistant)  
   - [Table of Contents](#table-of-contents)  
   - [Introduction](#introduction)  
     - [Pre-requisites](#pre-requisites)  
@@ -13,18 +13,18 @@
     - [The Server Status Agent](#the-server-status-agent)  
     - [The Incident Diagnosis Agent](#the-incident-diagnosis-agent)  
     - [The Communications Agent](#the-communications-agent)  
-    - [The NOC Supervisor Agent](#the-noc-supervisor-agent)  
+    - [The Supervisor Agent](#the-noc-supervisor-agent)  
   - [Summary](#summary) 
 
 ## Introduction  
 
-This use case describes a scenario where a Network Operations Center (NOC) Supervisor leverages an AI assistant through a natural language chat interface to investigate, diagnose, and resolve service disruptions. The assistant acts as a central routing point that selects the appropriate specialized agent to satisfy each request, ensuring rapid coordination across tools and knowledge sources.  
+This use case describes a scenario where a Supervisor leverages an AI assistant through a natural language chat interface to investigate, diagnose, and resolve service disruptions. The assistant acts as a central routing point that selects the appropriate specialized agent to satisfy each request, ensuring rapid coordination across tools and knowledge sources.  
 
-Agents can be configured in the system to address specific needs of the NOC. Each agent is powered by a Large Language Model (LLM) with function-calling capabilities, enabling it to invoke the right tools or knowledge bases based on the task description.  
+Agents can be configured in the system to address specific needs of the supervisor. Each agent is powered by a Large Language Model (LLM) with function-calling capabilities, enabling it to invoke the right tools or knowledge bases based on the task description.  
 
-In our scenario, we will build agents for **Network Status**, **Server Status**, **Incident Diagnosis**, and **Communications**, all coordinated by a **Supervisor Agent**. This setup allows the NOC Supervisor to ask questions in plain language, such as checking server health, investigating site-specific outages, diagnosing root causes, and drafting updates for field teams.  
+In our scenario, we will build agents for **Network Status**, **Server Status**, **Incident Diagnosis**, and **Communications**, all coordinated by a **Supervisor Agent**. This setup allows the Supervisor to ask questions in plain language, such as checking server health, investigating site-specific outages, diagnosing root causes, and drafting updates for field teams.  
 
-There is an argument to be made that a truly agentic solution would demonstrate a high degree of autonomy. In such a setup, the system itself could monitor alerts, analyze logs, determine the root cause, generate a remediation plan, and notify stakeholders — all without human intervention. However, we can also maintain a **“human in the loop”** approach, where the NOC Supervisor drives the workflow step by step, verifying outputs from each agent before proceeding to the next stage. This flexibility allows organizations to balance automation with oversight.  
+There is an argument to be made that a truly agentic solution would demonstrate a high degree of autonomy. In such a setup, the system itself could monitor alerts, analyze logs, determine the root cause, generate a remediation plan, and notify stakeholders — all without human intervention. However, we can also maintain a **“human in the loop”** approach, where the Supervisor drives the workflow step by step, verifying outputs from each agent before proceeding to the next stage. This flexibility allows organizations to balance automation with oversight.  
 
 <div style="border: 2px solid black; padding: 10px;">
 Even though we will take you through a complete and working example, you should also consider making changes that fit your desired use case, and only take this description as a reference point that guides you along your own implementation.
@@ -150,7 +150,7 @@ You now have all your credentials setup. The last thing left to do, is to setup 
 
 ### AI Agent Configuration  
 
-In this lab, we will configure a set of agents inside **watsonx Orchestrate (SaaS)**. Each agent plays a distinct role in the incident response workflow, while the **NOC Supervisor Agent** coordinates them and routes requests appropriately.  
+In this lab, we will configure a set of agents inside **watsonx Orchestrate (SaaS)**. Each agent plays a distinct role in the incident response workflow, while the **Supervisor Agent** coordinates them and routes requests appropriately.  
 
 #### Network Status Agent  
 - **Purpose**: Answers queries about the operational status of the network — including regions, sites, nodes, and active incidents.  
@@ -171,20 +171,20 @@ In this lab, we will configure a set of agents inside **watsonx Orchestrate (Saa
 #### Communications Agent  
 - **Purpose**: Drafts professional and concise email updates for internal or external stakeholders about incidents or operational changes.  
 - **Tooling**: This agent integrates with **Outlook** using an imported **OpenAPI JSON tool**, which enables it to send notification emails automatically.  
-- **Usage**: When the NOC Supervisor requests an incident update for the “Los Angeles CDW Network team,” this agent generates the email body and sends it through Outlook.  
+- **Usage**: When the Supervisor requests an incident update for the “Los Angeles CDW Network team,” this agent generates the email body and sends it through Outlook.  
 
-#### NOC Supervisor Agent  
+#### Supervisor Agent  
 - **Purpose**: Acts as the **routing agent**, interpreting user queries and delegating tasks to the right specialized agent.  
 - **Collaborators**:  
   - **Network Status Agent** → for network/site health checks.  
   - **Server Status Agent** → for server reachability.  
   - **Incident Diagnosis Agent** → for log analysis and remediation.  
   - **Communications Agent** → for drafting and sending updates.  
-- **User Experience**: Provides a natural language interface for the NOC Supervisor, serving as the single entry point for all incident-related queries.  
+- **User Experience**: Provides a natural language interface for the Supervisor, serving as the single entry point for all incident-related queries.  
 
 ---
 
-Together, these agents form the backbone of the **NOC Supervisor Assistant**. The Supervisor Agent orchestrates their interactions so that complex workflows (incident detection → diagnosis → remediation → communication) can be completed in a seamless conversational flow.
+Together, these agents form the backbone of the **Supervisor Assistant**. The Supervisor Agent orchestrates their interactions so that complex workflows (incident detection → diagnosis → remediation → communication) can be completed in a seamless conversational flow.
 
 
 ### The Network Status Agent
@@ -254,7 +254,7 @@ This binds the **Server Status Agent** to the `check_server_status` tool you jus
 
 ---
 
-The **Server Status Agent** is now ready. It can be queried directly or invoked by the NOC Supervisor Agent to check server availability in real time.
+The **Server Status Agent** is now ready. It can be queried directly or invoked by the Supervisor Agent to check server availability in real time.
 
 ### The Incident Diagnosis Agent
 
@@ -298,7 +298,7 @@ This agent definition links the `diagnose_incident_log` tool with the `incident_
 
 ---
 
- The **Incident Diagnosis Agent** is now ready. It can be invoked directly or through the NOC Supervisor Agent to analyze logs and recommend remediation steps.
+ The **Incident Diagnosis Agent** is now ready. It can be invoked directly or through the Supervisor Agent to analyze logs and recommend remediation steps.
 
 
 ### The Communication Agent
@@ -372,9 +372,9 @@ This agent definition links the Communications Agent with the `outlook_email` to
 
  The **Communications Agent** is now ready. It can draft incident updates and, when configured with Outlook and Slack, send them directly to stakeholders.
 
-### The NOC Supervisor Agent
+### The Supervisor Agent
 
-The **NOC Supervisor Agent** acts as the routing brain for this use case. It interprets a user’s request and delegates the task to the correct specialist agent:
+The **Supervisor Agent** acts as the routing brain for this use case. It interprets a user’s request and delegates the task to the correct specialist agent:
 - **Network Status Agent** → network/site health questions  
 - **Server Status Agent** → server/URL reachability  
 - **Incident Diagnosis Agent** → log analysis and remediation recommendations  
@@ -391,13 +391,13 @@ Make sure these are already imported and visible:
 
 If anything is missing, complete those agent/tool steps first.
 
-#### 1) Import the NOC Supervisor Agent YAML
+#### 1) Import the Supervisor Agent YAML
 This registers the **Supervisor Agent** and declares its collaborators (the four specialist agents).
 
-- Run: `orchestrate agents import -f wxo_assets/agents/noc_supervisor_agent.yaml`  
-- Verify: `orchestrate agents list` → you should see `noc_supervisor_agent`
+- Run: `orchestrate agents import -f wxo_assets/agents/supervisor_agent.yaml`  
+- Verify: `orchestrate agents list` → you should see `supervisor_agent`
 
-> **Console option (SaaS):** Go to **Agents → Add agent**, upload `wxo_assets/agents/noc_supervisor_agent.yaml`, then save.
+> **Console option (SaaS):** Go to **Agents → Add agent**, upload `wxo_assets/agents/supervisor_agent.yaml`, then save.
 
 #### 2) Confirm collaborators (routing targets)
 Open the agent details and confirm the collaborators include:
@@ -416,7 +416,7 @@ Try these natural-language prompts to validate routing:
 - “**Draft an email to the LA network team that the incident is resolved.**” → should route to **Communications Agent** (and can send via Outlook if configured)
 
 #### 4) Common troubleshooting tips
-- **Agent not found:** Re-run `orchestrate agents list`. If `noc_supervisor_agent` is missing, re-import `wxo_assets/agents/noc_supervisor_agent.yaml`.
+- **Agent not found:** Re-run `orchestrate agents list`. If `supervisor_agent` is missing, re-import `wxo_assets/agents/supervisor_agent.yaml`.
 - **Wrong route chosen:** Check the Supervisor’s instruction/routing rules. Ensure keywords in your test prompts align with the rules (e.g., “status/site/node/incident” → network status).
 - **Tool call fails downstream:** Confirm the target specialist agent is correctly bound to its tool (e.g., `get_data`, `check_server_status`, `diagnose_incident_log`) and that the tool exists in `orchestrate tools list`.
 - **Name mismatches:** The collaborator names in the Supervisor must match the registered agent names exactly.
@@ -427,10 +427,10 @@ By default, new agents start with “Hello! I am watsonx Orchestrate, an AI assi
 
 1. Go to the Orchestrate Console.
 2. In the left-hand navigation (hamburger menu), go to Build → Agent Builder.
-3. Click on `noc_supervisor_agent` to view its details.
-4. Edit the Agent Behavior in a way it says "Hello, I’m the NOC Supervisor. I can help you check network and server status, diagnose incidents, or draft communications. How can I help you today?"
+3. Click on `supervisor_agent` to view its details.
+4. Edit the Agent Behavior in a way it says "Hello, I’m the Supervisor. I can help you check network and server status, diagnose incidents, or draft communications. How can I help you today?"
 > Here are some things you may want to try: 
-  > - Role clarity: Specify to the agent that it should clearly identify itself as the NOC Supervisor.
+  > - Role clarity: Specify to the agent that it should clearly identify itself as the Supervisor.
   > - Task framing: Tell the agent to summarize the types of requests it can handle (network checks, incident diagnosis, communications).
   > - Override default: Make sure to instruct the agent to fully replace the standard watsonx greeting with this custom introduction.
   > - Constraints: Specify that the agent should not mention IBM or watsonx.
@@ -440,17 +440,17 @@ By default, new agents start with “Hello! I am watsonx Orchestrate, an AI assi
 
 ---
 
-The **NOC Supervisor Agent** is now ready. It provides a single conversational entry point and automatically delegates tasks to the right agent, enabling an end-to-end incident flow.
+The **Supervisor Agent** is now ready. It provides a single conversational entry point and automatically delegates tasks to the right agent, enabling an end-to-end incident flow.
 
 ### Bonus challenge 
 
 
 ## Summary
 
-In this lab, we explored the use case of a NOC Supervisor managing network incidents with the help of an agentic AI solution. We began by creating specialized agents for network status checks, server availability, incident diagnosis, and stakeholder communications. Each agent was connected to the right tools and data sources — for example, the Network Status Agent used an OpenAPI tool to fetch live site data, while the Communications Agent leveraged Outlook integration to send updates.  
+In this lab, we explored the use case of a Supervisor managing network incidents with the help of an agentic AI solution. We began by creating specialized agents for network status checks, server availability, incident diagnosis, and stakeholder communications. Each agent was connected to the right tools and data sources — for example, the Network Status Agent used an OpenAPI tool to fetch live site data, while the Communications Agent leveraged Outlook integration to send updates.  
 
-Finally, we brought everything together through the **NOC Supervisor Agent**, which serves as the main conversational entry point. From this single interface, the Supervisor can ask natural language questions and the system will automatically route the request to the appropriate agent.  
+Finally, we brought everything together through the **Supervisor Agent**, which serves as the main conversational entry point. From this single interface, the Supervisor can ask natural language questions and the system will automatically route the request to the appropriate agent.  
 
 This exercise provides a reference implementation to help you understand how multiple specialized agents can be orchestrated in **watsonx Orchestrate (SaaS)**. Some aspects are simulated, and in a production environment you would extend the integrations with real systems of record, monitoring platforms, and communication services. A truly agentic solution would go further by adding reasoning and planning capabilities, allowing the system to autonomously investigate, resolve, and communicate about incidents end-to-end.  
 
-Our goal here is to give you a starting point and spark ideas about how to apply agentic AI in real operational contexts. With these foundations, you can begin experimenting with automating parts of your own NOC workflows and consider where autonomous AI decision-making could add the most value.  
+Our goal here is to give you a starting point and spark ideas about how to apply agentic AI in real operational contexts. With these foundations, you can begin experimenting with automating parts of your own workflows and consider where autonomous AI decision-making could add the most value.  
