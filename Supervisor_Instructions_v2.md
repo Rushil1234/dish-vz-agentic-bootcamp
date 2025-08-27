@@ -160,7 +160,7 @@ In this lab, we will configure a set of agents inside **watsonx Orchestrate (Saa
 #### Server Status Agent  
 - **Purpose**: Verifies whether a specific server or URL is currently online and reachable.  
 - **Tools**: Uses a server check tool to confirm availability.  
-- **Usage**: Handles requests like “Check if cdw.com is up.”  
+- **Usage**: Handles requests like “Check if verizon.com is up.”  
 
 #### Incident Diagnosis Agent  
 - **Purpose**: Analyzes incident logs, identifies the most likely **root cause**, and recommends a **resolution plan**.  
@@ -171,7 +171,7 @@ In this lab, we will configure a set of agents inside **watsonx Orchestrate (Saa
 #### Communications Agent  
 - **Purpose**: Drafts professional and concise email updates for internal or external stakeholders about incidents or operational changes.  
 - **Tooling**: This agent integrates with **Outlook** using an imported **OpenAPI JSON tool**, which enables it to send notification emails automatically.  
-- **Usage**: When the Supervisor requests an incident update for the “Los Angeles CDW Network team,” this agent generates the email body and sends it through Outlook.  
+- **Usage**: When the Supervisor requests an incident update for the “Los Angeles Verizon Network team,” this agent generates the email body and sends it through Outlook.  
 
 #### Supervisor Agent  
 - **Purpose**: Acts as the **routing agent**, interpreting user queries and delegating tasks to the right specialized agent.  
@@ -243,7 +243,7 @@ This binds the **Server Status Agent** to the `check_server_status` tool you jus
 > **Console option (SaaS):** Go to **Agents → Add agent**, upload `wxo_assets/agents/server_status_agent.yaml`, then save.
 
 #### 3) Quick sanity checks
-- Ask: “Check if cdw.com is up.”  
+- Ask: “Check if verizon.com is up.”  
 - The agent should call the `check_server_status` tool and return whether the server is reachable.  
 - If no response or an error occurs, confirm the tool is present and correctly linked to the agent.
 
@@ -359,7 +359,7 @@ This agent definition links the Communications Agent with the `outlook_email` to
 > **Console option (SaaS):** Go to **Agents → Add agent**, upload `wxo_assets/agents/communications_agent.yaml`, then save.
 
 #### 4) Quick sanity checks
-- Ask the agent: “Draft an email update for the Los Angeles CDW Network team about the incident being resolved.”  
+- Ask the agent: “Draft an email update for the Los Angeles Verizon Network team about the incident being resolved.”  
 - The agent should generate a professional email body.  
 - If the Outlook tool is configured, you can also instruct it to send the email directly.
 
@@ -411,7 +411,7 @@ These must match the exact agent names you imported earlier. If names differ, up
 #### 3) Quick sanity checks (routing behavior)
 Try these natural-language prompts to validate routing:
 - “**What’s the status of site S002?**” → should route to **Network Status Agent** (calls `get_data`)
-- “**Check if cdw.com is up.**” → should route to **Server Status Agent** (calls `check_server_status`)
+- “**Check if verizon.com is up.**” → should route to **Server Status Agent** (calls `check_server_status`)
 - “**Here’s an incident log… what’s the root cause and fix?**” → should route to **Incident Diagnosis Agent** (uses `diagnose_incident_log`, consults resolution guides if configured)
 - “**Draft an email to the LA network team that the incident is resolved.**” → should route to **Communications Agent** (and can send via Outlook if configured)
 
