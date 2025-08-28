@@ -219,24 +219,27 @@ Click on **All agents → Create Agent → Enter name and description for your a
 ![alt text](images/wxo_agent1.png)
 ![alt text](images/wxo_agent2.png)
 
-It is necessary to describe your agent, including its purpose to help other agents and tools know when to use it.
+[Writing Descriptions](https://developer.watson-orchestrate.ibm.com/getting_started/guidelines#writing-descriptions-for-agents): It is necessary to provide well-crafted descriptions for your agents. These descriptions are used by supervisor agents to determine how to route user requests. It helps the agent decide when to consume this agent as a collaborator when it is added to the agent’s collaborator list.
 
 ![alt text](images/wxo_agent3.png)
 
-Scroll down to the toolset section and click on "Add Tool". Since we have already added the `get_data` tool to our local instance, we can select and add it to the agent.
+Scroll down to the **Toolset** section and click on "Add Tool". Since we have already added the `get_data` tool to our local instance, we can select and add it to the agent.
 
 ![alt text](images/wxo_agent4.png)
 ![alt text](images/wxo_agent5.png)
 ![alt text](images/wxo_agent6.png)
 
-- Run: `orchestrate agents import -f wxo_assets/agents/network_status_agent.yaml`
-- Verify: `orchestrate agents list` → you should see `network_status_agent`
+Next, we scroll down to the **Behavior** section. It controls the behavior of the agent and provides context for how to use its tools and agents.
+![alt text](images/wxo_agent7.png)
 
-> **Console option (SaaS):** Go to **Agents → Add agent**, upload `wxo_assets/agents/network_status_agent.yaml`, then save.
 
 ####  Quick sanity checks
 - Ask a scoped question (e.g., “What’s the status of site S002?”). The agent should call `get_data` behind the scenes.
 - If responses look generic, confirm the tool name in the YAML matches the imported tool’s name exactly (`get_data`), and that the OpenAPI paths/servers are reachable.
+
+> **WXO ADK CLI option:** You can import the agent from the ADK CLI by running the following commands in your terminal.
+- Run: `orchestrate agents import -f wxo_assets/agents/network_status_agent.yaml`
+- Verify: `orchestrate agents list` → you should see `network_status_agent`
 
 ####  Common troubleshooting tips
 - **Tool not found:** Re-run `orchestrate tools list`. If missing, re-import `wxo_assets/tools/get_data_openapi.json`.
