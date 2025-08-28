@@ -217,7 +217,7 @@ This registers the agent and binds its LLM instructions to the `get_data` tool.
 Click on **All agents → Create Agent → Enter name and description for your agent → Create**
 
 ![alt text](images/wxo_agent1.png)
-![alt text](images/wxo_agent1.png)
+![alt text](images/wxo_agent2.png)
 
 It is necessary to describe your agent, including its purpose to help other agents and tools know when to use it.
 
