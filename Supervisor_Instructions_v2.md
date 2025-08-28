@@ -209,6 +209,8 @@ Click on **All Tools → Create tool → Import an external tool → Upload the 
 
 Verify you see an entry for `get_data` tool under the tools homepage.
 
+[Writing Tool Descriptions](https://developer.watson-orchestrate.ibm.com/getting_started/guidelines#writing-descriptions-for-tools): Allows agents to identify when to use specific tools.
+
 > **WXO ADK CLI option:** You can import the OpenAPI tool from the ADK CLI by running the following commands in your terminal.
 - Run: `orchestrate tools import -k openapi -f wxo_assets/tools/get_data_openapi.json`
 - Verify: `orchestrate tools list` → you should see an entry for `get_data`
@@ -230,7 +232,8 @@ Scroll down to the **Toolset** section and click on "Add Tool". Since we have al
 ![alt text](images/wxo_agent5.png)
 ![alt text](images/wxo_agent6.png)
 
-Next, we scroll down to the **Behavior** section. It controls the behavior of the agent and provides context for how to use its tools and agents.
+[Writing Behaviours](https://developer.watson-orchestrate.ibm.com/getting_started/guidelines#writing-instructions-for-agents): Next, we scroll down to the **Behavior** section. It is crucial to provide instructions to let agents perform effectively. It decides the behavior of the agent and provides context for how to use its tools and agents.
+
 ![alt text](images/wxo_agent7.png)
 
 
