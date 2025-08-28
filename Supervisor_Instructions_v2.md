@@ -205,6 +205,7 @@ Click on **All Tools → Create tool → Import an external tool → Upload the 
 ![alt text](images/wxo_tool1.png)
 ![alt text](images/wxo_tool2.png)
 ![alt text](images/wxo_tool3.png)
+![alt text](images/wxo_tool4.png)
 
 Verify you see an entry for `get_data` tool under the tools homepage.
 
