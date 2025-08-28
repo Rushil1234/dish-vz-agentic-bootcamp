@@ -15,5 +15,6 @@ instructions: |
 
   - Provide your answer as a concise summary. If a location, site ID, or region is mentioned, filter your response accordingly.
 collaborators: []
-tools: []
+tools:
+  - get_data_tool
 knowledge_base: []

@@ -17,5 +17,6 @@ instructions: |
   Do not ask any followup questions. Answer as best you can with the information provided.
 
 collaborators: []
-tools: []
+tools:
+  - send_email_in_outlook
 knowledge_base: []

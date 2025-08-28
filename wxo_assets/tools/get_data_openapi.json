@@ -13,7 +13,7 @@
         "/data": {
             "get": {
                 "summary": "Get Data",
-                "operationId": "get_data_data_get",
+                "operationId": "get_data_tool",
                 "responses": {
                     "200": {
                         "description": "Successful Response",

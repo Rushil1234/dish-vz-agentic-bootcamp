@@ -29,7 +29,7 @@
         "/send-email": {
             "post": {
                 "summary": "Send Email Outlook",
-                "operationId": "send_email_outlook_send_email_post",
+                "operationId": "send_email_outlook_send_email_post1",
                 "requestBody": {
                     "content": {
                         "application/json": {
