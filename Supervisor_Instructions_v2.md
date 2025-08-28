@@ -443,6 +443,20 @@ By default, new agents start with “Hello! I am watsonx Orchestrate, an AI assi
 The **Supervisor Agent** is now ready. It provides a single conversational entry point and automatically delegates tasks to the right agent, enabling an end-to-end incident flow.
 
 ### Bonus challenge 
+### Optional Bonus Use Case: HR Agent Lab  
+
+As an optional exercise, you can explore the **HR Agent Lab**. This lab demonstrates how to build an agent that supports HR workflows, such as answering policy questions and coordinating employee-related tasks.  
+
+A key feature of this lab is the use of the **Flow Builder** in watsonx Orchestrate. Flow Builder allows you to design and run multi-step workflows that sequence agents, tools, and even human approvals. This makes it possible to go beyond simple Q&A and create repeatable, automated HR processes. For example: pulling employee data, checking visa status, and providing managers with structured updates, all in one orchestrated flow.  
+
+All the materials you need for this bonus lab are provided in the bootcamp repo:  
+- The **HR Agent Lab - watsonx Orchestrate Irving PDF**  
+- The **IBM_2025_Benefits_Guide PDF**  
+
+📂 You can find both files in the following folder:  
+`wxo_assets/bonus_labs/hr_agent_lab/`  
+
+This lab is entirely optional but recommended if you’d like to deepen your hands-on experience with agentic solutions, especially to see how **flows** can combine multiple agents and tools into end-to-end HR automation.
 
 
 ## Summary
