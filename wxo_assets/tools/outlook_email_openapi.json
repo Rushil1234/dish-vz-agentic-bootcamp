@@ -6,7 +6,7 @@
     },
     "servers": [
         {
-            "url": "https://vz-rfp-gen-bootcamp.apps.itz-xaao7x.infra01-lb.wdc07.techzone.ibm.com"
+            "url": ""
         }
     ],
     "paths": {
