@@ -18,7 +18,7 @@
 
 ## Introduction  
 
-This use case describes a scenario where a Supervisor leverages an AI assistant through a natural language chat interface to investigate, diagnose, and resolve service disruptions. The assistant acts as a central routing point that selects the appropriate specialized agent to satisfy each request, ensuring rapid coordination across tools and knowledge sources.  
+This use case describes a scenario where a Network Supervisor leverages an AI assistant through a natural language chat interface to investigate, diagnose, and resolve service disruptions. The assistant acts as a central routing point that selects the appropriate specialized agent to satisfy each request, ensuring rapid coordination across tools and knowledge sources.  
 
 Agents can be configured in the system to address specific needs of the supervisor. Each agent is powered by a Large Language Model (LLM) with function-calling capabilities, enabling it to invoke the right tools or knowledge bases based on the task description.  
 
@@ -157,6 +157,11 @@ In this lab, we will configure a set of agents inside **watsonx Orchestrate (Saa
 - **Tooling**: This agent connects to a **get_data tool** provided through an OpenAPI JSON file, enabling retrieval of up-to-date network data.  
 - **Usage**: Handles queries like “What is the status of site S002?” or “Are there any ongoing outages in the Northeast region?”  
 
+#### Communications Agent  
+- **Purpose**: Drafts professional and concise email updates for internal or external stakeholders about incidents or operational changes.  
+- **Tooling**: This agent integrates with **Outlook** using an imported **OpenAPI JSON tool**, which enables it to send notification emails automatically.  
+- **Usage**: When the Supervisor requests an incident update for the “Los Angeles Verizon Network team,” this agent generates the email body and sends it through Outlook. 
+
 #### Server Status Agent  
 - **Purpose**: Verifies whether a specific server or URL is currently online and reachable.  
 - **Tools**: Uses a server check tool to confirm availability.  
@@ -167,11 +172,7 @@ In this lab, we will configure a set of agents inside **watsonx Orchestrate (Saa
 - **Tools**: Connects to a log analysis tool.  
 - **Knowledge Sources**: Uses an incident resolution knowledge base for remediation steps.  
 - **Output**: Always provides both the error type and the recommended resolution plan.  
-
-#### Communications Agent  
-- **Purpose**: Drafts professional and concise email updates for internal or external stakeholders about incidents or operational changes.  
-- **Tooling**: This agent integrates with **Outlook** using an imported **OpenAPI JSON tool**, which enables it to send notification emails automatically.  
-- **Usage**: When the Supervisor requests an incident update for the “Los Angeles Verizon Network team,” this agent generates the email body and sends it through Outlook.  
+ 
 
 #### Supervisor Agent  
 - **Purpose**: Acts as the **routing agent**, interpreting user queries and delegating tasks to the right specialized agent.  
@@ -186,6 +187,11 @@ In this lab, we will configure a set of agents inside **watsonx Orchestrate (Saa
 
 Together, these agents form the backbone of the **Supervisor Assistant**. The Supervisor Agent orchestrates their interactions so that complex workflows (incident detection → diagnosis → remediation → communication) can be completed in a seamless conversational flow.
 
+### Importing agents using the watsonx Orchestrate Console
+**Accessing the console**: Navigate to the Watsonx Orchestrate home page. In the left-hand navigation menu, click on build to expand the menu and click on “Agent Builder”.
+![alt text](images/wxo_homepage.png)
+
+Agents depend on tools to perform their functions. When you define an agent, you specify which tools it can use in the tools section. The system needs the tools to exist before it can validate and import an agent that references them
 
 ### The Network Status Agent
 
@@ -194,11 +200,16 @@ In this lab, it **does not use a knowledge base**. Instead, it calls a `get_data
 
 #### Import the OpenAPI tool (`get_data`)
 This makes the `get_data` operation available for the agent to call.
+Click on **All Tools → Create tool → Import an external tool → Upload the OpenAPI (wxo_assets/tools/get_data_openapi.json) → Select the "Get Data" operation → Done**
+![alt text](images/wxo_tool1.png)
+![alt text](images/wxo_tool2.png)
+![alt text](images/wxo_tool3.png)
 
+Verify you see an entry for `get_data` tool under the tools homepage.
+
+> **WXO ADK CLI option:** You can import the OpenAPI tool from the ADK CLI by running the following commands in your terminal.
 - Run: `orchestrate tools import -k openapi -f wxo_assets/tools/get_data_openapi.json`
 - Verify: `orchestrate tools list` → you should see an entry for `get_data`
-
-> **Console option (SaaS):** You can import the OpenAPI tool from the Orchestrate web console by navigating to **Tools → Add tool → OpenAPI**, then uploading `wxo_assets/tools/get_data_openapi.json`.
 
 #### Import the Network Status Agent YAML
 This registers the agent and binds its LLM instructions to the `get_data` tool.
