@@ -191,7 +191,7 @@ Together, these agents form the backbone of the **Supervisor Assistant**. The Su
 **Accessing the console**: Navigate to the Watsonx Orchestrate home page. In the left-hand navigation menu, click on build to expand the menu and click on “Agent Builder”.
 ![alt text](images/wxo_homepage.png)
 
-Agents depend on tools to perform their functions. When you define an agent, you specify which tools it can use in the tools section. The system needs the tools to exist before it can validate and import an agent that references them
+Agents depend on tools to perform their functions. When you define an agent, you specify which tools it can use in the tools section. The system needs the tools to exist before it can validate and import an agent that references them.
 
 ### The Network Status Agent
 
@@ -201,6 +201,7 @@ In this lab, it **does not use a knowledge base**. Instead, it calls a `get_data
 #### Import the OpenAPI tool (`get_data`)
 This makes the `get_data` operation available for the agent to call.
 Click on **All Tools → Create tool → Import an external tool → Upload the OpenAPI (wxo_assets/tools/get_data_openapi.json) → Select the "Get Data" operation → Done**
+
 ![alt text](images/wxo_tool1.png)
 ![alt text](images/wxo_tool2.png)
 ![alt text](images/wxo_tool3.png)
@@ -213,6 +214,20 @@ Verify you see an entry for `get_data` tool under the tools homepage.
 
 #### Import the Network Status Agent YAML
 This registers the agent and binds its LLM instructions to the `get_data` tool.
+Click on **All agents → Create Agent → Enter name and description for your agent → Create**
+
+![alt text](images/wxo_agent1.png)
+![alt text](images/wxo_agent1.png)
+
+It is necessary to describe your agent, including its purpose to help other agents and tools know when to use it.
+
+![alt text](images/wxo_agent3.png)
+
+Scroll down to the toolset section and click on "Add Tool". Since we have already added the `get_data` tool to our local instance, we can select and add it to the agent.
+
+![alt text](images/wxo_agent4.png)
+![alt text](images/wxo_agent5.png)
+![alt text](images/wxo_agent6.png)
 
 - Run: `orchestrate agents import -f wxo_assets/agents/network_status_agent.yaml`
 - Verify: `orchestrate agents list` → you should see `network_status_agent`
