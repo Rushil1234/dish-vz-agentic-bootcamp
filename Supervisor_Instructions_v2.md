@@ -347,43 +347,8 @@ This tool provides the functionality for the agent to send messages through Outl
 
 > **Console option (SaaS):** In the Orchestrate console, navigate to **Tools → Add tool → OpenAPI**, then upload `wxo_assets/tools/outlook_email_openapi.json`.
 
-#### 2) Configure Slack connection
-The Slack connection enables authentication and provides the API endpoint required for the agent to send messages into Slack.
 
-1. You will be provided with access to a Slack workspace: <insert_link_here>.
-2. Create a new channel in this workspace. Use the following naming convention:  
-   **agentic-ai-bootcamp-<YOUR_INITIALS><TWO_DIGITS>**  
-   Example: `agentic-ai-bootcamp-aa82`
-3. Open the newly created channel and click on the channel name at the top.
-4. Navigate to **About** → scroll to the bottom → copy the **Channel ID**.
-5. Open `communications_agent.yaml` and replace `{channel_id}` with the Channel ID from the previous step. Save your changes.
-![alt text](images/slack_connection_1.png)
-6. You will be provided with a **Bot OAuth User Token**. Keep this token ready for the next step.
-7. Configure and set credentials for both **Draft** and **Live** environments.
-
-**Draft environment**
-```
-# Configure connections
-orchestrate connections configure -a slack_key_value_ibm_184bdbd3 --env draft --kind key_value --type team
-orchestrate connections configure -a slack_bearer_ibm_184bdbd3 --env draft --kind key_value --type team
-
-# Set credentials (replace <YOUR_TOKEN_HERE>)
-orchestrate connections set-credentials -a slack_key_value_ibm_184bdbd3 --env draft -e base_url=https://slack.com/api
-orchestrate connections set-credentials -a slack_bearer_ibm_184bdbd3 --env draft --token <YOUR_TOKEN_HERE>
-```
-
-**Live environment**
-```
-# Configure connections
-orchestrate connections configure -a slack_key_value_ibm_184bdbd3 --env live --kind key_value --type team
-orchestrate connections configure -a slack_bearer_ibm_184bdbd3 --env live --kind key_value --type team
-
-# Set credentials (replace <YOUR_TOKEN_HERE>)
-orchestrate connections set-credentials -a slack_key_value_ibm_184bdbd3 --env live -e base_url=https://slack.com/api
-orchestrate connections set-credentials -a slack_bearer_ibm_184bdbd3 --env live --token <YOUR_TOKEN_HERE>
-```
-
-#### 3) Import the Communications Agent YAML
+#### 2) Import the Communications Agent YAML
 This agent definition links the Communications Agent with the `outlook_email` tool so it can both draft and send notifications.
 
 - Run: `orchestrate agents import -f wxo_assets/agents/communications_agent.yaml`  
@@ -391,19 +356,19 @@ This agent definition links the Communications Agent with the `outlook_email` to
 
 > **Console option (SaaS):** Go to **Agents → Add agent**, upload `wxo_assets/agents/communications_agent.yaml`, then save.
 
-#### 4) Quick sanity checks
+#### 3) Quick sanity checks
 - Ask the agent: “Draft an email update for the Los Angeles Verizon Network team about the incident being resolved.”  
 - The agent should generate a professional email body.  
 - If the Outlook tool is configured, you can also instruct it to send the email directly.
 
-#### 5) Common troubleshooting tips
+#### 4) Common troubleshooting tips
 - **Tool not found:** If `outlook_email` is missing, re-import the OpenAPI JSON.  
 - **Incorrect binding:** Make sure the agent YAML references the tool name `outlook_email`.  
 - **Email not sending:** Verify the Outlook OpenAPI configuration includes the correct authentication and endpoints.  
 
 ---
 
- The **Communications Agent** is now ready. It can draft incident updates and, when configured with Outlook and Slack, send them directly to stakeholders.
+ The **Communications Agent** is now ready. It can draft incident updates and, when configured with Outlook, send them directly to stakeholders.
 
 ### The Supervisor Agent
 
