@@ -36,10 +36,9 @@ Even though we will take you through a complete and working example, you should 
 
 Before starting the lab, please ensure you have the following installed and configured on your system:  
 1.  **IBM Cloud Account**  
-    - Need Steps for IBM Cloud Account  
-#
-#
-#
+    - Use your Verizon email to create an IBMid: https://www.ibm.com/account/reg/us-en/signup?formid=urx-19776&a=@OIDC_CLIENT_ID@&Target=https%3A//www.ibm.com/internet-of-things/
+    - Check your email for a confirmation code and activate your IBMid
+    - You now have an IBMid. If done correctly you will receive an email stating your IBMid is activated. You can close this webpage.
 
 2. **Python 3.11+**  
    - Download from [python.org](https://www.python.org/downloads/release/python-3110/).  
@@ -85,26 +84,6 @@ Watsonx Orchestrate is IBM’s platform for creating, managing, and running AI-d
    - If you don't see any resources under AI/ML in your IBM Cloud Account kindly reachout to an instructor for assistance. 
    - Once you have access to an Orchestrate instance you may continue to the next section
 
-<!-- Key concepts to keep in mind:  
-
-- **Console Access**:  
-  You will log into the Watsonx Orchestrate console using your IBMid. All agent testing and orchestration will happen here.  
-
-- **Agents**:  
-  Each agent encapsulates a role — for example, the *Network Status Agent* queries site/network health, while the *Incident Diagnosis Agent* analyzes logs and suggests root causes.  
-
-- **Tools**:  
-  Tools are Python or API-based functions that agents can call (e.g., checking server status or parsing network logs).  
-
-- **Knowledge Sources**:  
-  Data sources that provide structured domain-specific information through a vectore store (e.g., site network status data) -->
-
-<!-- ### Accessing WXO
-
-(Information about IBMid and cloud account) -->
-#
-#
-#
 
 #### Local Dev Environment Setup
 
@@ -117,13 +96,20 @@ Watsonx Orchestrate is IBM’s platform for creating, managing, and running AI-d
 - Now open the project folder in vscode, and navigate to the terminal within the project directory.
 ![alt text](images/vscode_1.png)
 
-- [Installing the ADK](https://developer.watson-orchestrate.ibm.com/getting_started/installing#setting-up-and-installing-the-adk): Once you the terminal appears on your screen, ensure you are in the folder where the contents of the repo live. Now type in the following commnads line by line:
-
-```bash
-  python3.11 -m venv bootcamp_venv
-  source bootcamp_venv/bin/activate
-  pip install ibm-watsonx-orchestrate
-```  
+- [Installing the ADK](https://developer.watson-orchestrate.ibm.com/getting_started/installing#setting-up-and-installing-the-adk): Once you the terminal appears on your screen, ensure you are in the folder where the contents of the repo live. Now type in the following commnads line by line. Ensure you see (bootcamp_venv) in the terminal line before running pip install
+- MacOS :
+   
+  ```
+      python3.11 -m venv bootcamp_venv
+      source bootcamp_venv/bin/activate
+      pip install ibm-watsonx-orchestrate
+  ```
+- Windows:
+  ```
+      python -m venv bootcamp_venv
+      bootcamp_venv/Scripts/activate
+      pip install ibm-watsonx-orchestrate
+  ```   
 
 Here, we are creating a virtual environment for our dependencies to live. This allows our agents to work in an isolated workspace with out the interference of other global Python libraries on your device. After, we install the SaaS version of Watsonx Orchestrate so we can import our future agents and tools through the CLI.
 
@@ -162,12 +148,11 @@ You are now setup to have an API key within watsonx. Next, we will get the Sevic
 ![alt text](images/siu_3.png)
 
 3. Once you are in the watsonx Orchestrate console, click on your profile picture on the top right of your screen. Then, go to the settings tab. After, click into the API details and copy the `Service instace URL`. Go back to vscode, and paste this value into the vartiable `WO_INSTANCE`.
+    ![alt text](images/siu_4.png)
+    ![alt text](images/siu_5.png)
+  You now have all your credentials setup. The last thing left to do, is to setup your environment on orchestrate ADK.
 
-![alt text](images/siu_4.png)
-![alt text](images/siu_5.png)
-
-You now have all your credentials setup. The last thing left to do, is to setup your environment on orchestrate.
-
+#### ADK Setup
 1. [Creating an environment](https://developer.watson-orchestrate.ibm.com/environment/initiate_environment#creating-an-environment): Go to vscode and open the terminal. Make sure you are in the directory inside the cloned repo. The use the command: `orchestrate env add -n <environment-name> -u <service-instance-url> --type ibm_iam --activate`. Replace the environment-name with a name of your choice, and the service-instance-url with the url from your env file. 
 
 2. [Activating an environment](https://developer.watson-orchestrate.ibm.com/environment/initiate_environment#activating-an-environment): Now run `orchestrate env activate <environment-name>` and replace environment-name with the name you chose from before.
@@ -266,17 +251,8 @@ In this lab, it **does not use a knowledge base**. Instead, it calls a `get_data
          - `The Network Status Agent specializes in answering inquiries about the current operational status of Verizon’s network. It has access to up-to-date data about nodes sites, and services—such as cell towers, routers, and backhaul links—summarizes ongoing incidents, and provides a concise overview to the user.`
       5. Click Create
 
-   - Explore the Agent screen
+   - Take some time to fully Explore the Agent screen
         ![alt text](images/wxo_agent3.png)
-     1. Profile
-        - LLM
-        - Agent Style 
-        - Voice
-     2. Knowledge
-     3. Toolset
-     4. Behavior
-     5. Channels
-     6. Chat
    #
    #
    #
