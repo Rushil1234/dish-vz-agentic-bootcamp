@@ -5,14 +5,16 @@
 - [Use case: Supervisor Assistant](#use-case-noc-supervisor-assistant)  
   - [Table of Contents](#table-of-contents)  
   - [Introduction](#introduction)  
-    - [Pre-requisites](#pre-requisites)  
-  - [Watsonx Orchestrate (SaaS)](#watsonx-orchestrate-saas)  
-    - [Environment Setup](#environment-setup)  
-    - [AI Agent Configuration](#ai-agent-configuration)  
-    - [The Network Status Agent](#the-network-status-agent)  
-    - [The Server Status Agent](#the-server-status-agent)  
-    - [The Incident Diagnosis Agent](#the-incident-diagnosis-agent)  
-    - [The Communications Agent](#the-communications-agent)  
+    - [Pre-requisites](#pre-requisites)
+    - [Watsonx Orchestrate Setup](#watsonx-orchestrate-setup)  
+    - [Local Dev Environment Setup](#local-dev-environment-setup)  
+  - [Lab 1: Create Your First Agent](#lab-1:-create-your-first-agent) <!--Tag not working?-->
+    <!-- - [AI Agent Configuration](#ai-agent-configuration)   -->
+    - [The Network Status Agent](#the-network-status-agent)
+    - [The Communications Agent](#the-communications-agent)
+  - [Lab 2: Agent Development Kit](#lab-2:-agent-development-kit)    
+    - [The Incident Diagnosis Agent](#the-incident-diagnosis-agent) 
+    - [The Server Status Agent](#the-server-status-agent)
     - [The Supervisor Agent](#the-noc-supervisor-agent)  
   - [Summary](#summary) 
 
@@ -32,39 +34,58 @@ Even though we will take you through a complete and working example, you should 
 
 ### Pre-requisites  
 
-Before starting the lab, make sure you have the following installed and configured on your system:  
+Before starting the lab, please ensure you have the following installed and configured on your system:  
+1.  **IBM Cloud Account**  
+    - Need Steps for IBM Cloud Account  
+#
+#
+#
 
-1. **Python 3.11**  
+2. **Python 3.11+**  
    - Download from [python.org](https://www.python.org/downloads/release/python-3110/).  
    - Verify installation:  
      ```bash
      python3 --version
-     ```  
+     ```   
 
-2. **Git**  
+3. **IDE (Visual Studio Code)**  
+   - Download from [code.visualstudio.com](https://code.visualstudio.com/).  
+   - Install recommended extensions:  
+     - *Python* (for coding and debugging).  
+     - *YAML* (for agent and tool configuration files).
+
+4. **Git (Optional)**  
    - Download from [git-scm.com](https://git-scm.com/downloads).  
    - Verify installation:  
      ```bash
      git --version
-     ```  
+     ``` 
+  
 
-3. **Visual Studio Code (VS Code)**  
-   - Download from [code.visualstudio.com](https://code.visualstudio.com/).  
-   - Install recommended extensions:  
-     - *Python* (for coding and debugging).  
-     - *YAML* (for agent and tool configuration files).  
 
-Once these prerequisites are installed, you will be ready to set up the environment and import agents into watsonx Orchestrate.  
+Once these prerequisites are installed, you will be ready to set up the dev environment and begin the lab in Watsonx Orchestrate.  
 
-- Check with your instructor to make sure **all systems** are up and running before you continue.  
-- If you're an instructor running this lab, check the **Instructor's guides** to set up all environments and systems.  
+- Check with your instructor to ensure **all systems** are up and running before you continue.  
+<!-- - If you're an instructor running this lab, check the **Instructor's guides** to set up all environments and systems.   -->
 
-## Watsonx Orchestrate (SaaS)
+### Watsonx Orchestrate Setup
 
-Watsonx Orchestrate (wxo) is IBM’s SaaS-based platform for creating, managing, and running AI-driven digital workers and agentic flows.  
-In this bootcamp, you will use the SaaS version of Orchestrate to configure agents, tools, and knowledge sources directly from the web console, without needing to provision infrastructure yourself.  
+Watsonx Orchestrate is IBM’s platform for creating, managing, and running AI-driven digital workers and agentic flows. In this bootcamp, you will be provided an IBM Cloud SaaS instance of Orchestrate. Follow the steps below to gain access to your Orchestrate Instance: 
 
-Key concepts to keep in mind:  
+1. **Groups** 
+   - Ensure you've created an IBM Cloud account.
+   - If you're assigned to a group follow the instructions on the table to assign yourself to a group.
+2. **Join IBM Cloud Account** 
+   - You should recive an email with a link to join an IBM Cloud account
+   - Accept the invite and sign in to your IBM Cloud Account
+3. **Access your Orchestrate Instance**
+   - In the IBM Cloud Dashboard navigate to the Resource List. Under AI/ML select Watson Orchestrate-itz and launch the application.
+  ![alt text](images/siu_2.png)
+  ![alt text](images/siu_3.png)
+   - If you don't see any resources under AI/ML in your IBM Cloud Account kindly reachout to an instructor for assistance. 
+   - Once you have access to an Orchestrate instance you may continue to the next section
+
+<!-- Key concepts to keep in mind:  
 
 - **Console Access**:  
   You will log into the Watsonx Orchestrate console using your IBMid. All agent testing and orchestration will happen here.  
@@ -76,13 +97,16 @@ Key concepts to keep in mind:
   Tools are Python or API-based functions that agents can call (e.g., checking server status or parsing network logs).  
 
 - **Knowledge Sources**:  
-  Data sources that provide structured domain-specific information through a vectore store (e.g., site network status data)
+  Data sources that provide structured domain-specific information through a vectore store (e.g., site network status data) -->
 
-### Environment Setup
+<!-- ### Accessing WXO
 
-(Information about IBMid and cloud account)
+(Information about IBMid and cloud account) -->
+#
+#
+#
 
-#### Working Locally on the Repository
+#### Local Dev Environment Setup
 
 - Run the following command below to clone the repository. This will give you the foundational resources to complete the bootcamp.
 
@@ -148,33 +172,33 @@ You now have all your credentials setup. The last thing left to do, is to setup 
 
 2. [Activating an environment](https://developer.watson-orchestrate.ibm.com/environment/initiate_environment#activating-an-environment): Now run `orchestrate env activate <environment-name>` and replace environment-name with the name you chose from before.
 
-### AI Agent Configuration  
+## Lab1: Create Your First Agent  
 
-In this lab, we will configure a set of agents inside **watsonx Orchestrate (SaaS)**. Each agent plays a distinct role in the incident response workflow, while the **Supervisor Agent** coordinates them and routes requests appropriately.  
+In this lab, we will configure a set of 4 agents and 1 supervisor agent inside **Watsonx Orchestrate**. Each agent has a distinct responisbility and a unique toolset to comeplete a specific role in the incident response agentic system. The **Supervisor Agent** coordinates work among the agents by orchestrating requests to the appropriate agent. Below you will find an outline of all the agents we will build during this lab.
 
-#### Network Status Agent  
+##### Network Status Agent:  
 - **Purpose**: Answers queries about the operational status of the network — including regions, sites, nodes, and active incidents.  
 - **Tooling**: This agent connects to a **get_data tool** provided through an OpenAPI JSON file, enabling retrieval of up-to-date network data.  
 - **Usage**: Handles queries like “What is the status of site S002?” or “Are there any ongoing outages in the Northeast region?”  
 
-#### Communications Agent  
+##### Communications Agent  
 - **Purpose**: Drafts professional and concise email updates for internal or external stakeholders about incidents or operational changes.  
 - **Tooling**: This agent integrates with **Outlook** using an imported **OpenAPI JSON tool**, which enables it to send notification emails automatically.  
 - **Usage**: When the Supervisor requests an incident update for the “Los Angeles Verizon Network team,” this agent generates the email body and sends it through Outlook. 
 
-#### Server Status Agent  
-- **Purpose**: Verifies whether a specific server or URL is currently online and reachable.  
-- **Tools**: Uses a server check tool to confirm availability.  
-- **Usage**: Handles requests like “Check if verizon.com is up.”  
-
-#### Incident Diagnosis Agent  
+##### Incident Diagnosis Agent  
 - **Purpose**: Analyzes incident logs, identifies the most likely **root cause**, and recommends a **resolution plan**.  
 - **Tools**: Connects to a log analysis tool.  
 - **Knowledge Sources**: Uses an incident resolution knowledge base for remediation steps.  
 - **Output**: Always provides both the error type and the recommended resolution plan.  
+
+##### Server Status Agent  
+- **Purpose**: Verifies whether a specific server or URL is currently online and reachable.  
+- **Tools**: Uses a server check tool to confirm availability.  
+- **Usage**: Handles requests like “Check if verizon.com is up.”  
  
 
-#### Supervisor Agent  
+##### Supervisor Agent  
 - **Purpose**: Acts as the **routing agent**, interpreting user queries and delegating tasks to the right specialized agent.  
 - **Collaborators**:  
   - **Network Status Agent** → for network/site health checks.  
@@ -183,76 +207,322 @@ In this lab, we will configure a set of agents inside **watsonx Orchestrate (Saa
   - **Communications Agent** → for drafting and sending updates.  
 - **User Experience**: Provides a natural language interface for the Supervisor, serving as the single entry point for all incident-related queries.  
 
----
+Together, these agents form the backbone of the **Supervisor Assistant**. The Supervisor Agent orchestrates their interactions so that complex workflows (incident detection → diagnosis → remediation → communication) can be completed in a seamless conversational flow. Lets get started!
 
-Together, these agents form the backbone of the **Supervisor Assistant**. The Supervisor Agent orchestrates their interactions so that complex workflows (incident detection → diagnosis → remediation → communication) can be completed in a seamless conversational flow.
-
-### Importing agents using the watsonx Orchestrate Console
+<!-- ### Importing agents using the watsonx Orchestrate Console
 **Accessing the console**: Navigate to the Watsonx Orchestrate home page. In the left-hand navigation menu, click on build to expand the menu and click on “Agent Builder”.
 ![alt text](images/wxo_homepage.png)
 
-Agents depend on tools to perform their functions. When you define an agent, you specify which tools it can use in the tools section. The system needs the tools to exist before it can validate and import an agent that references them.
+Agents depend on tools to perform their functions. When you define an agent, you specify which tools it can use in the tools section. The system needs the tools to exist before it can validate and import an agent that references them. -->
 
 ### The Network Status Agent
 
-The **Network Status Agent** answers questions about network health (regions, sites, nodes, active incidents).  
-In this lab, it **does not use a knowledge base**. Instead, it calls a `get_data` tool defined via an **OpenAPI JSON** so responses are fetched live from the source.
+<!-- The **Network Status Agent** answers questions about network health (regions, sites, nodes, active incidents).  
+In this lab, it **does not use a knowledge base**. Instead, it calls a `get_data` tool defined via an **OpenAPI JSON** so responses are fetched live from the source. -->
 
-#### Import the OpenAPI tool (`get_data`)
-This makes the `get_data` operation available for the agent to call.
-Click on **All Tools → Create tool → Import an external tool → Upload the OpenAPI (wxo_assets/tools/get_data_openapi.json) → Select the "Get Data" operation → Done**
+**Step 1.** Import the OpenAPI tool (`get_data`)
+   - We will first import an external REST API as a tool. To do this we will import an OpenAPI Spec into WXO
+     1. Navigate to the Agent Builder tab.
+   ![alt text](images/wxo_homepage.png)
+     2. Import the Open API Spec **All Tools → Create tool → Import an external tool → Upload the OpenAPI (wxo_assets/tools/get_data_openapi.json) → Select the "Get Data" operation → Done**
+      ![alt text](images/wxo_tool1.png)
+      ![alt text](images/wxo_tool2.png)
+      ![alt text](images/wxo_tool3.png)
+      ![alt text](images/wxo_tool4.png)
+     3. Verify you see an entry for `get_data` tool under the tools homepage.
+     4. If you're using a shared environment change the name of your tool not to overwrite other users work. 
+      ![alt text](images/network_status_tool_info.png)
+   -  Explore the Tool Info Screen. 
+      1.  Add tool descriptions
+      2.  Add descriptions for output schema
+      3.  [Writing Tool Descriptions](https://developer.watson-orchestrate.ibm.com/getting_started/guidelines#writing-descriptions-for-tools): Allows agents to identify when to use specific tools.
+  #
+  #
+  #
 
-![alt text](images/wxo_tool1.png)
-![alt text](images/wxo_tool2.png)
-![alt text](images/wxo_tool3.png)
-![alt text](images/wxo_tool4.png)
 
-Verify you see an entry for `get_data` tool under the tools homepage.
 
-[Writing Tool Descriptions](https://developer.watson-orchestrate.ibm.com/getting_started/guidelines#writing-descriptions-for-tools): Allows agents to identify when to use specific tools.
+
+
+
+
 
 > **WXO ADK CLI option:** You can import the OpenAPI tool from the ADK CLI by running the following commands in your terminal.
-- Run: `orchestrate tools import -k openapi -f wxo_assets/tools/get_data_openapi.json`
-- Verify: `orchestrate tools list` → you should see an entry for `get_data`
+> - Run: `orchestrate tools import -k openapi -f wxo_assets/tools/get_data_openapi.json`
+> - Verify: `orchestrate tools list` → you should see an entry for `get_data`
 
-#### Import the Network Status Agent YAML
-This registers the agent and binds its LLM instructions to the `get_data` tool.
-Click on **All agents → Create Agent → Enter name and description for your agent → Create**
+**Step 2.** Create Network Satus Agent
+   - Now we will create our first agent. We will add the tool above into it's toolset and test the results.
+     1. Navigate to the Agent Builder tab.
+     2. To create a new agent click on **All agents → Create Agent → Enter name and description for your agent → Create**
 
-![alt text](images/wxo_agent1.png)
-![alt text](images/wxo_agent2.png)
+        ![alt text](images/wxo_agent1.png)
+        ![alt text](images/wxo_agent2.png)
+     3. Navigate to the Agent Builder tab.
+     3. Give your agent a name. `Network Satus Agent` 
+        - If you're in a shared WXO instance remember to make your name is unique.  
+     4. Add a description for your agent. 
+         - [Writing Descriptions](https://developer.watson-orchestrate.ibm.com/getting_started/guidelines#writing-descriptions-for-agents): It is necessary to provide well-crafted descriptions for your agents. These descriptions are used by supervisor agents to determine how to route user requests. It helps the agent decide when to consume this agent as a collaborator when it is added to the agent’s collaborator list. 
+         - `The Network Status Agent specializes in answering inquiries about the current operational status of Verizon’s network. It has access to up-to-date data about nodes sites, and services—such as cell towers, routers, and backhaul links—summarizes ongoing incidents, and provides a concise overview to the user.`
+      5. Click Create
 
-[Writing Descriptions](https://developer.watson-orchestrate.ibm.com/getting_started/guidelines#writing-descriptions-for-agents): It is necessary to provide well-crafted descriptions for your agents. These descriptions are used by supervisor agents to determine how to route user requests. It helps the agent decide when to consume this agent as a collaborator when it is added to the agent’s collaborator list.
+   - Explore the Agent screen
+        ![alt text](images/wxo_agent3.png)
+     1. Profile
+        - LLM
+        - Agent Style 
+        - Voice
+     2. Knowledge
+     3. Toolset
+     4. Behavior
+     5. Channels
+     6. Chat
+   #
+   #
+   #
+   - Now that we've explored what the platform provides for our Agent lets add our tool.
+     1. Scroll down to the **Toolset** section and click on "Add Tool". 
+     2. Since we have already added the `get_data` tool to our local instance, we can select and add it to the agent.
+      ![alt text](images/wxo_agent4.png)
+      ![alt text](images/wxo_agent5.png)
+      ![alt text](images/wxo_agent6.png)
+   - Lastly we must add instructions for our agent. This will explain to the LLM what to do, and how to utilize its tools to acomplish the goal.
+     1. Scroll down to the **Behavior** section and add the following instructions.
+      ```
+      - Answer questions about the operational status of Verizon’s network based on the provided site and node data.This includes information about nodes, incidents, and overall health of regions or specific locations. 
+      - Provide your answer as a concise summary. If a location, site ID, or region is mentioned, filter your response accordingly.
+      ```
+     2. [Writing Behaviours](https://developer.watson-orchestrate.ibm.com/getting_started/guidelines#writing-instructions-for-agents): Next, we scroll down to the **Behavior** section. It is crucial to provide instructions to let agents perform effectively. It decides the behavior of the agent and provides context for how to use its tools and agents.
 
-![alt text](images/wxo_agent3.png)
 
-Scroll down to the **Toolset** section and click on "Add Tool". Since we have already added the `get_data` tool to our local instance, we can select and add it to the agent.
-
-![alt text](images/wxo_agent4.png)
-![alt text](images/wxo_agent5.png)
-![alt text](images/wxo_agent6.png)
-
-[Writing Behaviours](https://developer.watson-orchestrate.ibm.com/getting_started/guidelines#writing-instructions-for-agents): Next, we scroll down to the **Behavior** section. It is crucial to provide instructions to let agents perform effectively. It decides the behavior of the agent and provides context for how to use its tools and agents.
-
-![alt text](images/wxo_agent7.png)
+      ![alt text](images/wxo_agent7.png)
+> **WXO ADK CLI option:** You can import the agent from the ADK CLI by running the following commands in your terminal.
+>- Run: `orchestrate agents import -f wxo_assets/agents/network_status_agent.yaml`
+>- Verify: `orchestrate agents list` → you should see `network_status_agent`
 
 
-####  Quick sanity checks
+**Step 3.** Now its time to test our agent
+
+   - In the chat ask `What is the status of site S003?`
+   - Click on the resoning tab and explore what it did to retrive the answer.
+   - `Can you provide me a table of all the cell towers in the system with their relevant status?`
+   - `Why is site S004 down?`
+
+#####  Quick sanity check:
 - Ask a scoped question (e.g., “What’s the status of site S002?”). The agent should call `get_data` behind the scenes.
 - If responses look generic, confirm the tool name in the YAML matches the imported tool’s name exactly (`get_data`), and that the OpenAPI paths/servers are reachable.
 
-> **WXO ADK CLI option:** You can import the agent from the ADK CLI by running the following commands in your terminal.
-- Run: `orchestrate agents import -f wxo_assets/agents/network_status_agent.yaml`
-- Verify: `orchestrate agents list` → you should see `network_status_agent`
 
-####  Common troubleshooting tips
+
+#####  Common troubleshooting tips:
 - **Tool not found:** Re-run `orchestrate tools list`. If missing, re-import `wxo_assets/tools/get_data_openapi.json`.
 - **Name mismatch:** Ensure the tool name referenced in the agent YAML is exactly `get_data`.
 - **Auth / endpoint issues:** If your OpenAPI requires auth or a specific base URL, verify those are set correctly in the OpenAPI JSON and accessible from Orchestrate (SaaS).
 
+
+
+Congradulations you've just completed building your frist Agent. The **Network Status Agent** is ready. It will now route natural-language queries to the `get_data` tool to return live network status.
+
 ---
 
-The **Network Status Agent** is ready. It will now route natural-language queries to the `get_data` tool to return live network status.
+### The Communication Agent
+
+The **Communications Agent** is responsible for drafting clear and professional notification emails about network incidents or operational updates.  
+It integrates with **Outlook** using an OpenAPI JSON tool, allowing it not only to generate content but also to send emails automatically.
+
+#### 1) Import the Outlook Email Tool
+This tool provides the functionality for the agent to send emails via the Outlook Mail Server API.
+   - We will first import the Outlook REST API as a tool. To do this we will import an OpenAPI Spec into WXO
+     1. Navigate to the Agent Builder tab.
+        ![alt text](images/wxo_homepage.png)
+     2. Import the Open API Spec **All Tools → Create tool → Import an external tool → Upload the OpenAPI (wxo_assets/tools/outlook_email_openapi.json) → Select the "Send Email Outlook" operation → Done**
+      ![alt text](images/wxo_tool1.png)
+      ![alt text](images/wxo_tool2.png)
+      ![alt text](images/wxo_tool3.png)
+      3. If you're using a shared environment change the name of your tool not to overwrite other users work. 
+      ![alt text](images/network_status_tool_info.png)
+
+  -  Explore the Tool Info Screen. 
+    1.  Add tool descriptions
+    2.  Add descriptions for output schema
+    3.  [Writing Tool Descriptions](https://developer.watson-orchestrate.ibm.com/getting_started/guidelines#writing-descriptions-for-tools): Allows agents to identify when to use specific tools.
+
+#
+#
+#
+
+> **WXO ADK CLI option:** You can import the tool from the ADK CLI by running the following commands in your terminal.
+>- Run: `orchestrate tools import -k openapi -f wxo_assets/tools/outlook_email_openapi.json`  
+>- Verify: `orchestrate tools list` → you should see `outlook_email`
+
+
+#### 2) Create the Communications Agent
+This agent definition links the Communications Agent with the `outlook_email` tool so it can both draft and send notifications.
+   - Now we will create the Communications Agent. We will add the tool above into it's toolset and test the results.
+     1. Navigate to the Agent Builder tab.
+     2. To create a new agent click on **All agents → Create Agent → Enter name and description for your agent → Create**
+
+        ![alt text](images/wxo_agent1.png)
+        ![alt text](images/wxo_agent2.png)
+
+     3. Give your agent a name. `Communications Agent` 
+        - If you're in a shared WXO instance remember to make your name is unique.  
+     4. Add a description for your agent. 
+         - [Writing Descriptions](https://developer.watson-orchestrate.ibm.com/getting_started/guidelines#writing-descriptions-for-agents): It is necessary to provide well-crafted descriptions for your agents. These descriptions are used by supervisor agents to determine how to route user requests. It helps the agent decide when to consume this agent as a collaborator when it is added to the agent’s collaborator list. 
+         - `The Communications Agent specializes in drafting internal or external notification emails and messages regarding network incidents or operational updates.`
+      5. Click Create
+   - Assign the `Send Email Outlook` Tool to the Communications Agent
+     1. Scroll down to the **Toolset** section and click on "Add Tool". 
+     2. Since we have already added the `Send Email Outlook` tool to our instance, we can select and add it to the agent.
+      ![alt text](images/wxo_agent4.png)
+      ![alt text](images/wxo_agent5.png)
+
+   - Lastly add instructions to the Communicaitons Agent
+     1. Scroll down to the **Behavior** section and add the following instructions.
+      ```
+      - Your response **must strictly follow this format** when asked to draft an email:
+      - Write a concise and professional message about a network incident or operational update.
+      - Start with the subject line on the first line, then the message body on the next line.
+      - Use actual line breaks (press Enter) — do not output \n as text.
+      - Do not include preambles, labels, or extra formatting.
+      - Tailor the message to the relevant team or stakeholder group if specified (e.g., Network Ops,     Engineering, External Vendor).
+      - Do not ask for the recipient email address during drafting.
+      - Only use the 'Send Email Outlook' tool when the user explicitly asks to send an email.
+      - If the user asks to send an email but does not provide a recipient email address, do not send the email under any circumstances until the user inputs “email” field
+      - Immediately ask the user: "What is the recipient’s email address?"
+      - Wait for the user to provide the email. Do not proceed until the user explicitly enters it.
+      - *Strictly follow this**: After the user provides recipient email address: Display it back to the user and ask: "Please confirm if this is correct: [email]".
+      - Do not ask unrelated follow-up questions.
+      - Respond only with the information requested.
+      ```
+
+     2. [Writing Behaviours](https://developer.watson-orchestrate.ibm.com/getting_started/guidelines#writing-instructions-for-agents): Next, we scroll down to the **Behavior** section. It is crucial to provide instructions to let agents perform effectively. It decides the behavior of the agent and provides context for how to use its tools and agents.
+
+
+
+> **WXO ADK CLI option:** You can import the tool from the ADK CLI by running the following commands in your terminal.
+>- Run: `orchestrate agents import -f wxo_assets/agents/communications_agent.yaml`  
+>- Verify: `orchestrate agents list` → you should see `communications_agent`
+
+
+
+#### 3) Quick sanity checks
+- Ask the agent: “Draft an email update for the Los Angeles Verizon Network team about the incident being resolved.”  
+- The agent should generate a professional email body.  
+- If the Outlook tool is configured, you can also instruct it to send the email directly.
+
+#### 4) Common troubleshooting tips
+- **Tool not found:** If `outlook_email` is missing, re-import the OpenAPI JSON.  
+- **Incorrect binding:** Make sure the agent YAML references the tool name `outlook_email`.  
+- **Email not sending:** Verify the Outlook OpenAPI configuration includes the correct authentication and endpoints.  
+
+
+
+ The **Communications Agent** is now ready. It can draft incident updates and, when configured with Outlook, send them directly to stakeholders.
+
+---
+## Lab 2: Agent Development Kit
+The Agent Development Kit (ADK) gives you a set of developer-focused tools to build, test, and manage agents in watsonx Orchestrate. With the ADK, you take full control of agent design using a lightweight framework and a simple CLI.
+Define agents in clear YAML or JSON files, create custom Python tools, and manage the entire agent lifecycle with just a few commands. 
+
+  - If you havent completed the local dev environment setup go back and ensure `ibm-watsonx-orchestrate` is installed in your venv and your venv is active.
+  - Run `orchestrate --help` to see a list of all the available commands.
+  - Run `orchestrate models list` to see all the available LLMs you can assign to agents. 
+  - Read the documentation to get a better understanding https://developer.watson-orchestrate.ibm.com/getting_started/what_is
+
+
+### The Incident Diagnosis Agent
+
+
+The **Incident Diagnosis Agent** is responsible for analyzing incident logs, tagging them with the most likely root cause, and suggesting a resolution plan.  
+It relies on a Python tool to parse logs and a knowledge base of resolution guides for remediation steps.
+
+#### 1) Import the Incident Diagnosis Tool
+This tool provides log analysis capabilities so the agent can extract error patterns and classify incidents.
+- Review the python tool
+  1. Open the `diagnose_incident_tool.py` file in VS Code
+      ![alt text](images/diagnose_incident_tool.png)
+  2. This python function mimics log analysis using keyword matching. 
+  3. Notice how the `@tool` decorator. This defines the function as a tool for the watsonx orchestrate extention. Notice how the toll desciption is already defined here.
+  4. If you're using a shared environment Add your initials to the tool name
+  5. Save the file
+  6. https://developer.watson-orchestrate.ibm.com/tools/create_tool#creating-python-based-tools
+
+- Import the python tool using the ADK
+
+  1.  Run: `orchestrate tools import -k python -f wxo_assets/tools/diagnose_incident_tool.py`  
+  2. Verify: `orchestrate tools list` → you should see `diagnose_incident_log`
+  3. https://developer.watson-orchestrate.ibm.com/tools/deploy_tool#importing-a-single-python-tool-file
+
+<!-- > **Console option (SaaS):** From the Orchestrate web console, navigate to **Tools → Add tool → Python**, then upload `wxo_assets/tools/diagnose_incident_tool.py`. -->
+
+
+#### 2) Import the Incident Diagnosis Agent YAML
+This agent definition links the `diagnose_incident_log` tool with the `incident_resolution_guides` knowledge base and enforces a strict output format.
+
+- Review the Agent Yaml
+  1. Open the `incident_diagnosis_agent.yaml` in VS Code
+      ![alt text](images/incident_diagnosis_agent.png)
+  2. All agents on the backend get defined as yaml. We can create a new agent in the same fasion.
+  3. Notice how all the fields match the UI fields. Also Notice we're using a different LLM. 
+  4. If you're using a shared environment Add your initials to the agent name
+  5. https://developer.watson-orchestrate.ibm.com/agents/build_agent
+
+- Import the Agent using the ADK
+  1. Run: `orchestrate agents import -f wxo_assets/agents/incident_diagnosis_agent.yaml`  
+  2. Verify: `orchestrate agents list` → you should see `incident_diagnosis_agent`
+  3. https://developer.watson-orchestrate.ibm.com/agents/import_agent
+
+<!-- > **Console option (SaaS):** Go to **Agents → Add agent**, upload `wxo_assets/agents/incident_diagnosis_agent.yaml`, then save. -->
+
+#### 3) Import the Incident Resolution Knowledge Base
+Knowledge Bases refer to Vector Stores that allow your Agents to query unstructured data such as documents. You can use the WXO interal Knowledge Base or connect your own vector store externally. 
+- The knowledge base in our case provides mappings from error types to recommended resolution plans. The agent consults it after the tool has identified the root cause.
+- Create a Knowledge Base
+  1. Navigate to the Agent Builder tab.
+              ![alt text](images/wxo_homepage.png)
+  2. Find and open the `incident_diagnosis_agent`
+      ![alt text](images/kb.png)
+  3. Scroll down to the Knowledge section and click `Choose Knowledge`
+      ![alt text](images/kb2.png)
+  4. Select Upload Files and upload `/wxo_assets/knowledge_bases/backhaul_failure_guide.pdf`, `/wxo_assets/knowledge_bases/config_error_guide.pdf`, and `/wxo_assets/knowledge_bases/power_outage_guide.pdf`
+      ![alt text](images/kb3.png)
+  5. Add the following as a description:
+     - `Troubleshooting documentation for resolving common network incident root causes.
+  Covers backhaul failures, power outages, and configuration errors.`
+  6. Save. This may take 1 min or two.
+- Configure the Knowledge Base
+  1. Scroll down to the Knowledge section and click `Edit knowledge settings`
+      ![alt text](images/kb4.png)
+  2. Modify the retreval criteria and save
+      ![alt text](images/kb5.png)
+
+<!--  -->
+<!--  -->
+<!--  -->
+<!--  -->
+
+> **WXO ADK CLI option:** You can import the Knowledge Base from the ADK CLI by running the following commands in your terminal.
+>- Run: `orchestrate knowledge-bases import -f wxo_assets/knowledge_bases/incident_resolution_guides.yaml`  
+>- Verify: `orchestrate knowledge-bases list` → you should see `incident_resolution_guides`
+<!-- 
+> **Console option (SaaS):** Go to **Knowledge Bases → Add knowledge base**, then upload `wxo_assets/knowledge_bases/incident_resolution_guides.yaml`. -->
+
+#### 4) Quick sanity checks
+- Provide a sample log (e.g., containing a power outage error).  
+- The agent should respond with both the **error type** and the **resolution plan**.  
+
+
+#### 5) Common troubleshooting tips
+- **Tool not found:** If missing, re-import `diagnose_incident_tool.py`.  
+- **Knowledge base not linked:** Ensure `incident_resolution_guides` is visible in `orchestrate knowledge-bases list`.  
+- **Format issues:** The agent always returns `error_type` and `resolution_plan`. If outputs look unstructured, confirm the YAML instructions are unchanged.  
+
+
+
+The **Incident Diagnosis Agent** is now ready. It can be invoked directly or through the Supervisor Agent to analyze logs and recommend remediation steps.
+
+---
 
 ### The Server Status Agent
 
@@ -289,86 +559,6 @@ This binds the **Server Status Agent** to the `check_server_status` tool you jus
 
 The **Server Status Agent** is now ready. It can be queried directly or invoked by the Supervisor Agent to check server availability in real time.
 
-### The Incident Diagnosis Agent
-
-
-The **Incident Diagnosis Agent** is responsible for analyzing incident logs, tagging them with the most likely root cause, and suggesting a resolution plan.  
-It relies on a Python tool to parse logs and a knowledge base of resolution guides for remediation steps.
-
-#### 1) Import the Incident Diagnosis Tool
-This tool provides log analysis capabilities so the agent can extract error patterns and classify incidents.
-
-- Run: `orchestrate tools import -k python -f wxo_assets/tools/diagnose_incident_tool.py`  
-- Verify: `orchestrate tools list` → you should see `diagnose_incident_log`
-
-> **Console option (SaaS):** From the Orchestrate web console, navigate to **Tools → Add tool → Python**, then upload `wxo_assets/tools/diagnose_incident_tool.py`.
-
-#### 2) Import the Incident Resolution Knowledge Base
-This knowledge base provides mappings from error types to recommended resolution plans. The agent consults it after the tool has identified the root cause.
-
-- Run: `orchestrate knowledge-bases import -f wxo_assets/knowledge_bases/incident_resolution_guides.yaml`  
-- Verify: `orchestrate knowledge-bases list` → you should see `incident_resolution_guides`
-
-> **Console option (SaaS):** Go to **Knowledge Bases → Add knowledge base**, then upload `wxo_assets/knowledge_bases/incident_resolution_guides.yaml`.
-
-#### 3) Import the Incident Diagnosis Agent YAML
-This agent definition links the `diagnose_incident_log` tool with the `incident_resolution_guides` knowledge base and enforces a strict output format.
-
-- Run: `orchestrate agents import -f wxo_assets/agents/incident_diagnosis_agent.yaml`  
-- Verify: `orchestrate agents list` → you should see `incident_diagnosis_agent`
-
-> **Console option (SaaS):** Go to **Agents → Add agent**, upload `wxo_assets/agents/incident_diagnosis_agent.yaml`, then save.
-
-#### 4) Quick sanity checks
-- Provide a sample log (e.g., containing a power outage error).  
-- The agent should respond with both the **error type** and the **resolution plan**.  
-
-
-#### 5) Common troubleshooting tips
-- **Tool not found:** If missing, re-import `diagnose_incident_tool.py`.  
-- **Knowledge base not linked:** Ensure `incident_resolution_guides` is visible in `orchestrate knowledge-bases list`.  
-- **Format issues:** The agent always returns `error_type` and `resolution_plan`. If outputs look unstructured, confirm the YAML instructions are unchanged.  
-
----
-
- The **Incident Diagnosis Agent** is now ready. It can be invoked directly or through the Supervisor Agent to analyze logs and recommend remediation steps.
-
-
-### The Communication Agent
-
-The **Communications Agent** is responsible for drafting clear and professional notification emails about network incidents or operational updates.  
-It integrates with **Outlook** using an OpenAPI JSON tool, allowing it not only to generate content but also to send emails automatically.
-
-#### 1) Import the Outlook Email Tool
-This tool provides the functionality for the agent to send messages through Outlook.
-
-- Run: `orchestrate tools import -k openapi -f wxo_assets/tools/outlook_email_openapi.json`  
-- Verify: `orchestrate tools list` → you should see `outlook_email`
-
-> **Console option (SaaS):** In the Orchestrate console, navigate to **Tools → Add tool → OpenAPI**, then upload `wxo_assets/tools/outlook_email_openapi.json`.
-
-
-#### 2) Import the Communications Agent YAML
-This agent definition links the Communications Agent with the `outlook_email` tool so it can both draft and send notifications.
-
-- Run: `orchestrate agents import -f wxo_assets/agents/communications_agent.yaml`  
-- Verify: `orchestrate agents list` → you should see `communications_agent`
-
-> **Console option (SaaS):** Go to **Agents → Add agent**, upload `wxo_assets/agents/communications_agent.yaml`, then save.
-
-#### 3) Quick sanity checks
-- Ask the agent: “Draft an email update for the Los Angeles Verizon Network team about the incident being resolved.”  
-- The agent should generate a professional email body.  
-- If the Outlook tool is configured, you can also instruct it to send the email directly.
-
-#### 4) Common troubleshooting tips
-- **Tool not found:** If `outlook_email` is missing, re-import the OpenAPI JSON.  
-- **Incorrect binding:** Make sure the agent YAML references the tool name `outlook_email`.  
-- **Email not sending:** Verify the Outlook OpenAPI configuration includes the correct authentication and endpoints.  
-
----
-
- The **Communications Agent** is now ready. It can draft incident updates and, when configured with Outlook, send them directly to stakeholders.
 
 ### The Supervisor Agent
 
@@ -436,11 +626,14 @@ By default, new agents start with “Hello! I am watsonx Orchestrate, an AI assi
 
 ✅ The next time you start a chat, the agent should greet with your customized introduction instead of the default watsonx Orchestrate greeting.
 
----
+
 
 The **Supervisor Agent** is now ready. It provides a single conversational entry point and automatically delegates tasks to the right agent, enabling an end-to-end incident flow.
 
-### Bonus challenge 
+
+---
+
+
 ### Bonus Use Case: HR Agent Lab  
 
 As an optional exercise, you can explore the **HR Agent Lab**. This lab demonstrates how to build an agent that supports HR workflows, such as answering policy questions and coordinating employee-related tasks.  

@@ -6,26 +6,10 @@
     },
     "servers": [
         {
-            "url": ""
+            "url": "https://bootcamp-bootcamp.apps.itz-xaao7x.infra01-lb.wdc07.techzone.ibm.com"
         }
     ],
     "paths": {
-        "/token": {
-            "get": {
-                "summary": "Get Tokens",
-                "operationId": "get_tokens_token_get",
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/send-email": {
             "post": {
                 "summary": "Send Email Outlook",
@@ -56,22 +40,6 @@
                                 "schema": {
                                     "$ref": "#/components/schemas/HTTPValidationError"
                                 }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/": {
-            "get": {
-                "summary": "Main",
-                "operationId": "main__get",
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
                             }
                         }
                     }
