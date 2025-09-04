@@ -6,7 +6,7 @@
     },
     "servers": [
         {
-            "url": ""
+            "url": "https://bootcamp-bootcamp.apps.itz-xaao7x.infra01-lb.wdc07.techzone.ibm.com"
         }
     ],
     "paths": {
@@ -14,22 +14,6 @@
             "get": {
                 "summary": "Get Data",
                 "operationId": "get_data_tool",
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/": {
-            "get": {
-                "summary": "Main",
-                "operationId": "main__get",
                 "responses": {
                     "200": {
                         "description": "Successful Response",
