@@ -15,7 +15,7 @@
   - [Lab 2: Agent Development Kit](#lab-2:-agent-development-kit)    
     - [The Incident Diagnosis Agent](#the-incident-diagnosis-agent) 
     - [The Server Status Agent](#the-server-status-agent)
-    - [The Supervisor Agent](#the-noc-supervisor-agent)  
+    - [The Supervisor Agent](#the-supervisor-agent)  
   - [Summary](#summary) 
 
 ## Introduction  
@@ -539,6 +539,7 @@ If anything is missing, complete those agent/tool steps first.
 #### 1) Import the Supervisor Agent YAML
 This registers the **Supervisor Agent** and declares its collaborators (the four specialist agents).
 
+- Open the `supervisor_agent.yaml` and modify the collaborator agent names to the correct names of your agents.
 - Run: `orchestrate agents import -f wxo_assets/agents/supervisor_agent.yaml`  
 - Verify: `orchestrate agents list` → you should see `supervisor_agent`
 
