@@ -11,7 +11,7 @@
   - [Lab 1: Create Your First Agent](#lab-1:-create-your-first-agent) <!--Tag not working?-->
     <!-- - [AI Agent Configuration](#ai-agent-configuration)   -->
     - [The Network Status Agent](#the-network-status-agent)
-    - [The Communications Agent](#the-communications-agent)
+    - [The Communication Agent](#the-communication-agent)
   - [Lab 2: Agent Development Kit](#lab-2:-agent-development-kit)    
     - [The Incident Diagnosis Agent](#the-incident-diagnosis-agent) 
     - [The Server Status Agent](#the-server-status-agent)
