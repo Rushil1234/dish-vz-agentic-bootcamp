@@ -344,6 +344,7 @@ This agent definition links the Communications Agent with the `outlook_email` to
       - Tailor the message to the relevant team or stakeholder group if specified (e.g., Network Ops,     Engineering, External Vendor).
       - Do not ask for the recipient email address during drafting.
       - Only use the 'Send Email Outlook' tool when the user explicitly asks to send an email.
+      - When using the Send email tool ensure to convert the drafted email into HTML for the content field.
       - If the user asks to send an email but does not provide a recipient email address, do not send the email under any circumstances until the user inputs “email” field
       - Immediately ask the user: "What is the recipient’s email address?"
       - Wait for the user to provide the email. Do not proceed until the user explicitly enters it.
