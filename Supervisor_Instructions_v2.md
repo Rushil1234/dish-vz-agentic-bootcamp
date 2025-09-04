@@ -32,6 +32,8 @@ There is an argument to be made that a truly agentic solution would demonstrate 
 Even though we will take you through a complete and working example, you should also consider making changes that fit your desired use case, and only take this description as a reference point that guides you along your own implementation.
 </div>  
 
+-----
+
 ### Pre-requisites  
 
 Before starting the lab, please ensure you have the following installed and configured on your system:  
@@ -71,9 +73,10 @@ Once these prerequisites are installed, you will be ready to set up the dev envi
 
 Watsonx Orchestrate is IBM’s platform for creating, managing, and running AI-driven digital workers and agentic flows. In this bootcamp, you will be provided an IBM Cloud SaaS instance of Orchestrate. Follow the steps below to gain access to your Orchestrate Instance: 
 
-1. **Groups** 
+1. **Environment Assignment** 
    - Ensure you've created an IBM Cloud account.
-   - If you're assigned to a group follow the instructions on the table to assign yourself to a group.
+   - If you're assigned to a group follow the instructions on the table to assign yourself to a group. https://wkf.ms/41ugV3u
+    ![alt text](images/form.png)
 2. **Join IBM Cloud Account** 
    - You should recive an email with a link to join an IBM Cloud account
    - Accept the invite and sign in to your IBM Cloud Account
@@ -84,7 +87,7 @@ Watsonx Orchestrate is IBM’s platform for creating, managing, and running AI-d
    - If you don't see any resources under AI/ML in your IBM Cloud Account kindly reachout to an instructor for assistance. 
    - Once you have access to an Orchestrate instance you may continue to the next section
 
-
+---
 #### Local Dev Environment Setup
 
 - Run the following command below to clone the repository. This will give you the foundational resources to complete the bootcamp.
@@ -97,66 +100,45 @@ Watsonx Orchestrate is IBM’s platform for creating, managing, and running AI-d
 ![alt text](images/vscode_1.png)
 
 - [Installing the ADK](https://developer.watson-orchestrate.ibm.com/getting_started/installing#setting-up-and-installing-the-adk): Once you the terminal appears on your screen, ensure you are in the folder where the contents of the repo live. Now type in the following commnads line by line. Ensure you see (bootcamp_venv) in the terminal line before running pip install
-- MacOS :
-   
-  ```
-      python3.11 -m venv bootcamp_venv
-      source bootcamp_venv/bin/activate
-      pip install ibm-watsonx-orchestrate
-  ```
-- Windows:
-  ```
-      python -m venv bootcamp_venv
-      bootcamp_venv/Scripts/activate
-      pip install ibm-watsonx-orchestrate
-  ```   
+  - MacOS :
+     
+    ```
+        python3.11 -m venv bootcamp_venv
+        source bootcamp_venv/bin/activate
+        pip install ibm-watsonx-orchestrate
+    ```
+  - Windows:
+    ```
+        python -m venv bootcamp_venv
+        bootcamp_venv/Scripts/activate
+        pip install ibm-watsonx-orchestrate
+    ```   
 
 Here, we are creating a virtual environment for our dependencies to live. This allows our agents to work in an isolated workspace with out the interference of other global Python libraries on your device. After, we install the SaaS version of Watsonx Orchestrate so we can import our future agents and tools through the CLI.
 
-- Now we will rename our `.env_example` to `.env` through vscode. To do so, click on the pages icon on the left side and find the `.env_example` file. Right click on the file and rename it to `.env`. This will be a place where we store our credentials so that we can connect to Watsonx Orchestrate.
+<!-- - Now we will rename our `.env_example` to `.env` through vscode. To do so, click on the pages icon on the left side and find the `.env_example` file. Right click on the file and rename it to `.env`. This will be a place where we store our credentials so that we can connect to Watsonx Orchestrate. -->
 
-#### API Key
-
-1. Go to the [IBM cloud console](https://cloud.ibm.com/) and ensure the right cloud account is selected through the dropdown. Check TechZone to confirm what cloud account you should be in.
-
-![alt text](images/api_key_1.png)
-
-2. Before we retrieve the API key, we have to create a project in watsonx.ai for our service to be assoicated with. Click the hamburger menu on the top left and click into resource list. After, click into the dropdown for **AI / Machine Learning**, and go to the linked instance of the watsonx.ai runtime. Once on the instance page, click the dropdown for **Launch in** and click `IBM watsonx`.
-
-![alt text](images/api_key_2.png)
-![alt text](images/api_key_3.png)
-
-3. Scroll down to the **Projects** tab, and create a new project by clicking the **+** icon. then name the project `VZ WXO Bootcamp` and leave the rest of the settings the same. Click the blue **create project**. After, click the watsonx badge on the top left to go back to the home page.
-
-![alt text](images/api_key_4.png)
-![alt text](images/api_key_5.png)
-![alt text](images/api_key_6.png)
-
-4. Scroll up to the **Developer Access** tab and select your project in the project/deployment space dropdown. At the bottom of this section, click the button that says `Create API key +`. Name the key, and leave all the settings the same. Once you create the key, copy the key and paste it into your `.env` file. **It is incredibly important to save this key, as you can only see it on the watsonx console the one time!**
-
-You are now setup to have an API key within watsonx. Next, we will get the Sevice Instance URL.
-
-#### Service Instance URL
-
-1. Go to the [IBM cloud console](https://cloud.ibm.com/) and ensure the right cloud account is selected through the dropdown. Check TechZone to confirm what cloud account you should be in.
-
-![alt text](images/api_key_1.png)
-
-2. Click the hamburger menu on the top left and click into resource list. After, click into the dropdown for **AI / Machine Learning**, and go to the linked instance of the watsonx Orchestrate. Once on the instance page, click  **Launch watsonx Orchestrate**.
-
-![alt text](images/siu_2.png)
-![alt text](images/siu_3.png)
-
-3. Once you are in the watsonx Orchestrate console, click on your profile picture on the top right of your screen. Then, go to the settings tab. After, click into the API details and copy the `Service instace URL`. Go back to vscode, and paste this value into the vartiable `WO_INSTANCE`.
+#### Orchestrate Instance Details
+- Navigate to the IBM Cloud resource list. And launch Orchestrate.
+      ![alt text](images/siu_2.png)
+  ![alt text](images/siu_3.png)
+- Navigate to the Orchestrate Settings > API details. And Save the URL as we will use it in a later step.
     ![alt text](images/siu_4.png)
-    ![alt text](images/siu_5.png)
-  You now have all your credentials setup. The last thing left to do, is to setup your environment on orchestrate ADK.
+    ![alt text](images/key.png)
+- Click on the Generate API Key button. It should redirect you to the IBM Cloud IAM API Key page.
+      ![alt text](images/key2.png)
+- Click Create and provide a name. Leave all other settings default
+  ![alt text](images/key3.png)
+- Once complete you should recieve an API Key. Save this key.
+  ![alt text](images/key4.png)
+    
 
 #### ADK Setup
 1. [Creating an environment](https://developer.watson-orchestrate.ibm.com/environment/initiate_environment#creating-an-environment): Go to vscode and open the terminal. Make sure you are in the directory inside the cloned repo. The use the command: `orchestrate env add -n <environment-name> -u <service-instance-url> --type ibm_iam --activate`. Replace the environment-name with a name of your choice, and the service-instance-url with the url from your env file. 
 
 2. [Activating an environment](https://developer.watson-orchestrate.ibm.com/environment/initiate_environment#activating-an-environment): Now run `orchestrate env activate <environment-name>` and replace environment-name with the name you chose from before.
 
+---
 ## Lab1: Create Your First Agent  
 
 In this lab, we will configure a set of 4 agents and 1 supervisor agent inside **Watsonx Orchestrate**. Each agent has a distinct responisbility and a unique toolset to comeplete a specific role in the incident response agentic system. The **Supervisor Agent** coordinates work among the agents by orchestrating requests to the appropriate agent. Below you will find an outline of all the agents we will build during this lab.
@@ -236,7 +218,7 @@ In this lab, it **does not use a knowledge base**. Instead, it calls a `get_data
 > - Run: `orchestrate tools import -k openapi -f wxo_assets/tools/get_data_openapi.json`
 > - Verify: `orchestrate tools list` → you should see an entry for `get_data`
 
-**Step 2.** Create Network Satus Agent
+**Step 2.** Create Network Status Agent
    - Now we will create our first agent. We will add the tool above into it's toolset and test the results.
      1. Navigate to the Agent Builder tab.
      2. To create a new agent click on **All agents → Create Agent → Enter name and description for your agent → Create**
@@ -244,7 +226,7 @@ In this lab, it **does not use a knowledge base**. Instead, it calls a `get_data
         ![alt text](images/wxo_agent1.png)
         ![alt text](images/wxo_agent2.png)
      3. Navigate to the Agent Builder tab.
-     3. Give your agent a name. `Network Satus Agent` 
+     3. Give your agent a name. `Network Status Agent` 
         - If you're in a shared WXO instance remember to make your name is unique.  
      4. Add a description for your agent. 
          - [Writing Descriptions](https://developer.watson-orchestrate.ibm.com/getting_started/guidelines#writing-descriptions-for-agents): It is necessary to provide well-crafted descriptions for your agents. These descriptions are used by supervisor agents to determine how to route user requests. It helps the agent decide when to consume this agent as a collaborator when it is added to the agent’s collaborator list. 
@@ -253,9 +235,7 @@ In this lab, it **does not use a knowledge base**. Instead, it calls a `get_data
 
    - Take some time to fully Explore the Agent screen
         ![alt text](images/wxo_agent3.png)
-   #
-   #
-   #
+
    - Now that we've explored what the platform provides for our Agent lets add our tool.
      1. Scroll down to the **Toolset** section and click on "Add Tool". 
      2. Since we have already added the `get_data` tool to our local instance, we can select and add it to the agent.
@@ -439,7 +419,7 @@ This agent definition links the `diagnose_incident_log` tool with the `incident_
 - Review the Agent Yaml
   1. Open the `incident_diagnosis_agent.yaml` in VS Code
       ![alt text](images/incident_diagnosis_agent.png)
-  2. All agents on the backend get defined as yaml. We can create a new agent in the same fasion.
+  2. All agents on the backend get defined as yaml. We can create a new agent in the same fashion.
   3. Notice how all the fields match the UI fields. Also Notice we're using a different LLM. 
   4. If you're using a shared environment Add your initials to the agent name
   5. https://developer.watson-orchestrate.ibm.com/agents/build_agent
