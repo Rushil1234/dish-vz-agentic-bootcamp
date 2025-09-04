@@ -364,7 +364,7 @@ This agent definition links the Communications Agent with the `outlook_email` to
 
 
 #### 3) Quick sanity checks
-- Ask the agent: “Draft an email update for the Los Angeles Verizon Network team about the incident being resolved.”  
+- Ask the agent: “Draft an email invite about an Agentic AI bootcamp in New York around October.”  
 - The agent should generate a professional email body.  
 - If the Outlook tool is configured, you can also instruct it to send the email directly.
 
