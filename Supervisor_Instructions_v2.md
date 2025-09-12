@@ -3,7 +3,25 @@
 ## Table of Contents
 
 - [Use case: Supervisor Assistant](#use-case-noc-supervisor-assistant)  
-  - [Table of Contents](#table-of-contents)  
+  - [Table of Contents](- **Usage- **Usage*- **Tools**: Uses a server check tool to confirm availability.  
+- **Usag         - `Th      ```
+      - Answer questions about the operational status of Dish's network based on the provided site and node data.This includes information about nodes, incidents, and overall health of regions or specific locations. 
+      - Provide your answer as a c#### 3) Quick sanity checks
+- Ask: "Check if dish.com is - "**Check if dish.com is up.**" → should route to **Server Status Agent** (calls `check_server_status`)p."  
+- The agent should call the `check_server_status` tool and return whether the server is reachable.ise summary. If a location, site ID, or region is mentioned, filter your response accordingly.
+      ```twork Status Agent specializes in answering inquiries about the current operational status of Dish's network. It has access to up-to-date data about nodes sites, and services—such as cell towers, routers, and backhaul links—summarizes ongoing incidents, and provides a concise overview to the user.`**: Handles requests like "Check if dish.com is up."  
+ 
+
+##### Supervisor Agenten the Supervisor requests an incident update for the "Los Angeles Dish Network team," this agent generates the email body and sends it through Outlook.- **Tools**: Uses a server check tool to confirm availability.  
+- **Usag         - `Th      ```
+      - Answer questions about the operational status of Dish's network based on the provided site and node data.This includes information about nodes, incidents, and overall health of regions or specific locations. 
+      - Provide your answer as a c#### 3) Quick sanity checks
+- Ask: "Check if dish.com is - "**Check if dish.com is up.**" → should route to **Server Status Agent** (calls `check_server_status`)p."  
+- The agent should call the `check_server_status` tool and return whether the server is reachable.ise summary. If a location, site ID, or region is mentioned, filter your response accordingly.
+      ```twork Status Agent specializes in answering inquiries about the current operational status of Dish's network. It has access to up-to-date data about nodes sites, and services—such as cell towers, routers, and backhaul links—summarizes ongoing incidents, and provides a concise overview to the user.`**: Handles requests like "Check if dish.com is up."  
+ 
+
+##### Supervisor Agenten the Supervisor requests an incident update for the "Los Angeles Dish Network team," this agent generates the email body and sends it through Outlook.table-of-contents)  
   - [Introduction](#introduction)  
     - [Pre-requisites](#pre-requisites)
     - [Watsonx Orchestrate Setup](#watsonx-orchestrate-setup)  
@@ -38,7 +56,7 @@ Even though we will take you through a complete and working example, you should 
 
 Before starting the lab, please ensure you have the following installed and configured on your system:  
 1.  **IBM Cloud Account**  
-    - Use your Verizon email to create an IBMid: https://www.ibm.com/account/reg/us-en/signup?formid=urx-19776&a=@OIDC_CLIENT_ID@&Target=https%3A//www.ibm.com/internet-of-things/
+    - Use your Dish email to create an IBMid: https://www.ibm.com/account/reg/us-en/signup?formid=urx-19776&a=@OIDC_CLIENT_ID@&Target=https%3A//www.ibm.com/internet-of-things/
     - Check your email for a confirmation code and activate your IBMid
     - You now have an IBMid. If done correctly you will receive an email stating your IBMid is activated. You can close this webpage.
 
@@ -93,7 +111,7 @@ Watsonx Orchestrate is IBM’s platform for creating, managing, and running AI-d
 - Run the following command below to clone the repository. This will give you the foundational resources to complete the bootcamp.
 
 ```bash
-  git clone https://github.com/Aditya-Asthana/ai-agentic-bootcamp-vz.git
+  git clone https://github.com/Aditya-Asthana/ai-agentic-bootcamp-dish.git
 ```  
 
 - Now open the project folder in vscode, and navigate to the terminal within the project directory.

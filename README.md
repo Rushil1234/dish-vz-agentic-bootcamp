@@ -1,8 +1,14 @@
 # Supervisor Assistant  
 
-![alt text](images/cover_image.jpg)
-
-This use case is about an AI-powered assistant supporting a Network Supervisor in managing service disruptions. The Supervisor is responsible for monitoring the health of regional networks, diagnosing incidents, coordinating across infrastructure and communications, and ensuring timely remediation to minimize downtime. We apply an agentic solution based on watsonx Orchestrate and watsonx.ai to optimize these processes.  
+![alt text](images/cover_image.jpg)1.1. **Check server status** → "Check the server status of `dish.com`."  
+2. **Assess incidents** → "Are there any incidents in our network?"  
+3. **Retrieve site data** → "Get me the network status for site `S002`."  
+4. **Diagnose root cause** → "What is the root cause of this error and what are the steps to resolve it?" (with source references).  
+5. **Communicate resolution** → "Draft an email for the Los Angeles Dish Network team with everything we discussed and let them know the issue is resolved."eck server status** → "Check the server status of `dish.com`."  
+2. **Assess incidents** → "Are there any incidents in our network?"  
+3. **Retrieve site data** → "Get me the network status for site `S002`."  
+4. **Diagnose root cause** → "What is the root cause of this error and what are the steps to resolve it?" (with source references).  
+5. **Communicate resolution** → "Draft an email for the Los Angeles Dish Network team with everything we discussed and let them know the issue is resolved."s use case is about an AI-powered assistant supporting a Network Supervisor in managing service disruptions. The Supervisor is responsible for monitoring the health of regional networks, diagnosing incidents, coordinating across infrastructure and communications, and ensuring timely remediation to minimize downtime. We apply an agentic solution based on watsonx Orchestrate and watsonx.ai to optimize these processes.  
 
 ---
 
@@ -37,7 +43,7 @@ Overall, this results in **lower operational costs, reduced downtime penalties, 
 
 ## Architecture  
 
-![alt text](images/vzbootcamp.png)
+![alt text](images/dishbootcamp.png)
 
 The system integrates multiple specialized agents coordinated by the Supervisor Agent:  
 
