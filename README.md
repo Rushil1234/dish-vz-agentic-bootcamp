@@ -1,6 +1,6 @@
 # Supervisor Assistant  
 
-![alt text](images/cover_image.jpg)1.1. **Check server status** → "Check the server status of `dish.com`."  
+![alt text](images/cover_image.png)1.1. **Check server status** → "Check the server status of `dish.com`."  
 2. **Assess incidents** → "Are there any incidents in our network?"  
 3. **Retrieve site data** → "Get me the network status for site `S002`."  
 4. **Diagnose root cause** → "What is the root cause of this error and what are the steps to resolve it?" (with source references).  
