@@ -420,7 +420,7 @@ The **Jira Agent** automates the process of creating Jira tickets for incidents 
       ![alt text](images/wxo_tool3.png)
 
 
-  follow same steps as above, but this time for tools upload the #### email_notification_tool.py and jira_connect_tool.py 
+  follow same steps as above, but this time for tools upload the *email_notification_tool.json and jira_connect_tool.json*
   then import the jira agent with this prompt: 
 
   ```
