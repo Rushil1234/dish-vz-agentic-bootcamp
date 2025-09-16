@@ -31,7 +31,8 @@
     - [The Network Status Agent](#the-network-status-agent)
     - [The Communication Agent](#the-communication-agent)
   - [Lab 2: Agent Development Kit](#lab-2:-agent-development-kit)    
-    - [The Incident Diagnosis Agent](#the-incident-diagnosis-agent) 
+    - [The Incident Diagnosis Agent](#the-incident-diagnosis-agent)
+    - [The Jira Agent](#the-incident-diagnosis-agent)
     - [The Server Status Agent](#the-server-status-agent)
     - [The Supervisor Agent](#the-supervisor-agent)  
   - [Summary](#summary) 
@@ -396,56 +397,6 @@ This agent definition links the Communications Agent with the `outlook_email` to
 
  The **Communications Agent** is now ready. It can draft incident updates and, when configured with Outlook, send them directly to stakeholders.
 
-### Jira Agent
-
-The **Jira Agent** automates the process of creating Jira tickets for incidents or operational tasks and notifying stakeholders by email.
-
----
-
-## Purpose
-- Create and manage Jira tickets automatically.  
-- Send notification emails to stakeholders when tickets are created or updated.  
----
-
-## Tools Used
-- **Jira Tool** → for creating and managing Jira tickets.  
-- **Outlook Email Tool** → for sending email notifications.  
-
----
-1. Navigate to the Agent Builder tab.
-        ![alt text](images/wxo_homepage.png)
-2. Import the Open API Spec **All Tools → Create tool → Import an external tool → Upload the OpenAPI (wxo_assets/tools/outlook_email_openapi.json) → Select the "Send Email Outlook" operation → Done**
-      ![alt text](images/wxo_tool1.png)
-      ![alt text](images/wxo_tool2.png)
-      ![alt text](images/wxo_tool3.png)
-
-
-  follow same steps as above, but this time for tools upload the *email_notification_tool.json and jira_connect_tool.json*
-  then import the jira agent with this prompt: 
-
-  ```
-  You serve as the communication hub of the NOC. Your role ensures that every network incident is captured in Jira, stakeholders are promptly notified, and detailed records are maintained. You are the bridge between detection, response, and resolution—keeping all teams aligned and customers informed.
-
-Your responsibilities center on Jira ticket management, stakeholder communication, and incident documentation. You create and track tickets with the correct priority, include technical details, and escalate when needed. At the same time, you manage communication timelines, send immediate alerts to affected parties, and provide regular status updates. Accurate documentation of incidents, resolution steps, and SLA compliance is essential for operational transparency.
-
-You work closely with the Supervisor, and external engineers to ensure smooth workflow integration. Success in this role is measured by accuracy, speed, and clarity: tickets must be complete and timely, notifications must be delivered within minutes, and updates must be consistent until resolution. Your efficiency directly impacts customer satisfaction, SLA performance, and overall business continuity. 
-  ```
-## Usage
-Typical request example:  
-
-> "Open a Jira ticket for a site outage in Denver and notify the team."
-
-The agent will:  
-1. Create the ticket in Jira with the relevant details.  
-2. Draft and send an email notification to the specified recipients, including the **ticket ID** and **summary**.  
-
----
-
-## Behavior
-- ✅ Confirms ticket details (**title, description, priority, assignee**) before submitting.  
-- ✅ Captures **ticket ID** and link after creation.  
-- ✅ Generates an email with subject
-
 ---
 ## Lab 2: Agent Development Kit
 The Agent Development Kit (ADK) gives you a set of developer-focused tools to build, test, and manage agents in watsonx Orchestrate. With the ADK, you take full control of agent design using a lightweight framework and a simple CLI.
@@ -520,6 +471,90 @@ Knowledge Bases refer to Vector Stores that allow your Agents to query unstructu
       ![alt text](images/kb4.png)
   2. Modify the retreval criteria and save
       ![alt text](images/kb5.png)
+
+
+
+### Jira Agent
+
+The **Jira Agent** automates the process of creating Jira tickets for incidents or operational tasks and notifying stakeholders by email.
+
+---
+
+## Purpose
+- Create and manage Jira tickets automatically.  
+- Send notification emails to stakeholders when tickets are created or updated.  
+---
+
+## Tools Used
+- **Jira Tool** → for creating and managing Jira tickets.  
+- **Outlook Email Tool** → for sending email notifications.  
+
+---
+
+  follow same steps as above, but this time for tools upload the *email_notification_tool.json and jira_connect_tool.json*
+  then import the jira agent with this prompt: 
+
+  ```
+  You serve as the communication hub of the NOC. Your role ensures that every network incident is captured in Jira, stakeholders are promptly notified, and detailed records are maintained. You are the bridge between detection, response, and resolution—keeping all teams aligned and customers informed.
+
+Your responsibilities center on Jira ticket management, stakeholder communication, and incident documentation. You create and track tickets with the correct priority, include technical details, and escalate when needed. At the same time, you manage communication timelines, send immediate alerts to affected parties, and provide regular status updates. Accurate documentation of incidents, resolution steps, and SLA compliance is essential for operational transparency.
+
+You work closely with the Supervisor, and external engineers to ensure smooth workflow integration. Success in this role is measured by accuracy, speed, and clarity: tickets must be complete and timely, notifications must be delivered within minutes, and updates must be consistent until resolution. Your efficiency directly impacts customer satisfaction, SLA performance, and overall business continuity. 
+  ```
+## Usage
+Typical request example:  
+
+> "Open a Jira ticket for a site outage in Denver and notify the team."
+
+The agent will:  
+1. Create the ticket in Jira with the relevant details.  
+2. Draft and send an email notification to the specified recipients, including the **ticket ID** and **summary**.  
+
+---
+
+## Behavior
+- ✅ Confirms ticket details (**title, description, priority, assignee**) before submitting.  
+- ✅ Captures **ticket ID** and link after creation.  
+- ✅ Generates an email with subject
+
+#### 1) Import the Jira Creation Tool
+This tool provides log analysis capabilities so the agent can extract error patterns and classify incidents.
+- Review the python tool
+  1. Open the `wxo_assets/tools/jira_connect_tool.py` file in VS Code
+      ![alt text](images/jira.png)
+  2. This python function mimics log analysis using keyword matching. 
+  3. Notice how the `@tool` decorator. This defines the function as a tool for the watsonx orchestrate extention. Notice how the toll desciption is already defined here.
+  4. If you're using a shared environment Add your initials to the tool name
+  5. Save the file
+  6. https://developer.watson-orchestrate.ibm.com/tools/create_tool#creating-python-based-tools
+
+- Import the python tool using the ADK
+
+  1.  Run: `orchestrate tools import -k python -f wxo_assets/tools/jira_connect_tool.py`  
+  2. Verify: `orchestrate tools list` → you should see `jira_connect_tool`
+  3. https://developer.watson-orchestrate.ibm.com/tools/deploy_tool#importing-a-single-python-tool-file
+
+<!-- > **Console option (SaaS):** From the Orchestrate web console, navigate to **Tools → Add tool → Python**, then upload `wxo_assets/tools/jira_connect_tool.py`. -->
+
+#### 1) Import the Jira Creation Tool
+This tool provides log analysis capabilities so the agent can extract error patterns and classify incidents.
+- Review the python tool
+  1. Open the `wxo_assets/tools/email_notification_tool.py` file in VS Code
+      ![alt text](images/emailnoti.png)
+  2. This python function mimics log analysis using keyword matching. 
+  3. Notice how the `@tool` decorator. This defines the function as a tool for the watsonx orchestrate extention. Notice how the toll desciption is already defined here.
+  4. If you're using a shared environment Add your initials to the tool name
+  5. Save the file
+  6. https://developer.watson-orchestrate.ibm.com/tools/create_tool#creating-python-based-tools
+
+- Import the python tool using the ADK
+
+  1.  Run: `orchestrate tools import -k python -f wxo_assets/tools/email_notification_tool.py.py`  
+  2. Verify: `orchestrate tools list` → you should see `email_notification_tool.py`
+  3. https://developer.watson-orchestrate.ibm.com/tools/deploy_tool#importing-a-single-python-tool-file
+
+<!-- > **Console option (SaaS):** From the Orchestrate web console, navigate to **Tools → Add tool → Python**, then upload `wxo_assets/tools/email_notification_tool.py.py`. -->
+
 
 <!--  -->
 <!--  -->
