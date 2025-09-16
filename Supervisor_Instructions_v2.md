@@ -396,16 +396,6 @@ This agent definition links the Communications Agent with the `outlook_email` to
 
  The **Communications Agent** is now ready. It can draft incident updates and, when configured with Outlook, send them directly to stakeholders.
 
----
-## Lab 2: Agent Development Kit
-The Agent Development Kit (ADK) gives you a set of developer-focused tools to build, test, and manage agents in watsonx Orchestrate. With the ADK, you take full control of agent design using a lightweight framework and a simple CLI.
-Define agents in clear YAML or JSON files, create custom Python tools, and manage the entire agent lifecycle with just a few commands. 
-
-  - If you havent completed the local dev environment setup go back and ensure `ibm-watsonx-orchestrate` is installed in your venv and your venv is active.
-  - Run `orchestrate --help` to see a list of all the available commands.
-  - Run `orchestrate models list` to see all the available LLMs you can assign to agents. 
-  - Read the documentation to get a better understanding https://developer.watson-orchestrate.ibm.com/getting_started/what_is
-
 ### Jira Agent
 
 The **Jira Agent** automates the process of creating Jira tickets for incidents or operational tasks and notifying stakeholders by email.
@@ -428,6 +418,18 @@ The **Jira Agent** automates the process of creating Jira tickets for incidents 
       ![alt text](images/wxo_tool1.png)
       ![alt text](images/wxo_tool2.png)
       ![alt text](images/wxo_tool3.png)
+
+
+  follow same steps as above, but this time for tools upload the #### email_notification_tool.py and jira_connect_tool.py 
+  then import the jira agent with this prompt: 
+
+  ```
+  You serve as the communication hub of the NOC. Your role ensures that every network incident is captured in Jira, stakeholders are promptly notified, and detailed records are maintained. You are the bridge between detection, response, and resolution—keeping all teams aligned and customers informed.
+
+Your responsibilities center on Jira ticket management, stakeholder communication, and incident documentation. You create and track tickets with the correct priority, include technical details, and escalate when needed. At the same time, you manage communication timelines, send immediate alerts to affected parties, and provide regular status updates. Accurate documentation of incidents, resolution steps, and SLA compliance is essential for operational transparency.
+
+You work closely with the Supervisor, and external engineers to ensure smooth workflow integration. Success in this role is measured by accuracy, speed, and clarity: tickets must be complete and timely, notifications must be delivered within minutes, and updates must be consistent until resolution. Your efficiency directly impacts customer satisfaction, SLA performance, and overall business continuity. 
+  ```
 ## Usage
 Typical request example:  
 
@@ -444,6 +446,15 @@ The agent will:
 - ✅ Captures **ticket ID** and link after creation.  
 - ✅ Generates an email with subject
 
+---
+## Lab 2: Agent Development Kit
+The Agent Development Kit (ADK) gives you a set of developer-focused tools to build, test, and manage agents in watsonx Orchestrate. With the ADK, you take full control of agent design using a lightweight framework and a simple CLI.
+Define agents in clear YAML or JSON files, create custom Python tools, and manage the entire agent lifecycle with just a few commands. 
+
+  - If you havent completed the local dev environment setup go back and ensure `ibm-watsonx-orchestrate` is installed in your venv and your venv is active.
+  - Run `orchestrate --help` to see a list of all the available commands.
+  - Run `orchestrate models list` to see all the available LLMs you can assign to agents. 
+  - Read the documentation to get a better understanding https://developer.watson-orchestrate.ibm.com/getting_started/what_is
 ### The Incident Diagnosis Agent
 
 
