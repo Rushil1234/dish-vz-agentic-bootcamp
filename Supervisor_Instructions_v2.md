@@ -492,7 +492,8 @@ The **Jira Agent** automates the process of creating Jira tickets for incidents 
 ---
 
   follow same steps as above, but this time for tools upload the *email_notification_tool.json and jira_connect_tool.json*
-  then import the jira agent with this prompt: 
+ 
+ The jira agent will have this prompt: 
 
   ```
   You serve as the communication hub of the NOC. Your role ensures that every network incident is captured in Jira, stakeholders are promptly notified, and detailed records are maintained. You are the bridge between detection, response, and resolution—keeping all teams aligned and customers informed.
@@ -536,7 +537,7 @@ This tool provides log analysis capabilities so the agent can extract error patt
 
 <!-- > **Console option (SaaS):** From the Orchestrate web console, navigate to **Tools → Add tool → Python**, then upload `wxo_assets/tools/jira_connect_tool.py`. -->
 
-#### 1) Import the Jira Creation Tool
+#### 2) Import the Email Creation Tool
 This tool provides log analysis capabilities so the agent can extract error patterns and classify incidents.
 - Review the python tool
   1. Open the `wxo_assets/tools/email_notification_tool.py` file in VS Code
@@ -555,6 +556,21 @@ This tool provides log analysis capabilities so the agent can extract error patt
 
 <!-- > **Console option (SaaS):** From the Orchestrate web console, navigate to **Tools → Add tool → Python**, then upload `wxo_assets/tools/email_notification_tool.py.py`. -->
 
+#### 2) Import the Jira Agent YAML
+
+- Review the Agent Yaml
+  1. Open the `wxo_assets/agents/jira_agent.yaml` in VS Code
+  2. All agents on the backend get defined as yaml. We can create a new agent in the same fashion.
+  3. Notice how all the fields match the UI fields. Also Notice we're using a different LLM. 
+  4. If you're using a shared environment Add your initials to the agent name
+  5. https://developer.watson-orchestrate.ibm.com/agents/build_agent
+
+- Import the Agent using the ADK
+  1. Run: `orchestrate agents import -f wxo_assets/agents/jira_agent.yaml`  
+  2. Verify: `orchestrate agents list` → you should see `jira_agent`
+  3. https://developer.watson-orchestrate.ibm.com/agents/import_agent
+
+<!-- > **Console option (SaaS):** Go to **Agents → Add agent**, upload `wxo_assets/agents/jira_agent.yaml`, then save. -->
 
 <!--  -->
 <!--  -->
