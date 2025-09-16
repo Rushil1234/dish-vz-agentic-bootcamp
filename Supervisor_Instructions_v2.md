@@ -473,6 +473,27 @@ Knowledge Bases refer to Vector Stores that allow your Agents to query unstructu
       ![alt text](images/kb5.png)
 
 
+> **WXO ADK CLI option:** You can import the Knowledge Base from the ADK CLI by running the following commands in your terminal.
+>- Run: `orchestrate knowledge-bases import -f wxo_assets/knowledge_bases/incident_resolution_guides.yaml`  
+>- Verify: `orchestrate knowledge-bases list` → you should see `incident_resolution_guides`
+<!-- 
+> **Console option (SaaS):** Go to **Knowledge Bases → Add knowledge base**, then upload `wxo_assets/knowledge_bases/incident_resolution_guides.yaml`. -->
+
+#### 4) Quick sanity checks
+- Provide a sample log (e.g., containing a power outage error).  
+- The agent should respond with both the **error type** and the **resolution plan**.  
+
+
+#### 5) Common troubleshooting tips
+- **Tool not found:** If missing, re-import `diagnose_incident_tool.py`.  
+- **Knowledge base not linked:** Ensure `incident_resolution_guides` is visible in `orchestrate knowledge-bases list`.  
+- **Format issues:** The agent always returns `error_type` and `resolution_plan`. If outputs look unstructured, confirm the YAML instructions are unchanged.  
+
+
+
+The **Incident Diagnosis Agent** is now ready. It can be invoked directly or through the Supervisor Agent to analyze logs and recommend remediation steps.
+
+---
 
 ### Jira Agent
 
@@ -576,28 +597,6 @@ This tool provides log analysis capabilities so the agent can extract error patt
 <!--  -->
 <!--  -->
 <!--  -->
-
-> **WXO ADK CLI option:** You can import the Knowledge Base from the ADK CLI by running the following commands in your terminal.
->- Run: `orchestrate knowledge-bases import -f wxo_assets/knowledge_bases/incident_resolution_guides.yaml`  
->- Verify: `orchestrate knowledge-bases list` → you should see `incident_resolution_guides`
-<!-- 
-> **Console option (SaaS):** Go to **Knowledge Bases → Add knowledge base**, then upload `wxo_assets/knowledge_bases/incident_resolution_guides.yaml`. -->
-
-#### 4) Quick sanity checks
-- Provide a sample log (e.g., containing a power outage error).  
-- The agent should respond with both the **error type** and the **resolution plan**.  
-
-
-#### 5) Common troubleshooting tips
-- **Tool not found:** If missing, re-import `diagnose_incident_tool.py`.  
-- **Knowledge base not linked:** Ensure `incident_resolution_guides` is visible in `orchestrate knowledge-bases list`.  
-- **Format issues:** The agent always returns `error_type` and `resolution_plan`. If outputs look unstructured, confirm the YAML instructions are unchanged.  
-
-
-
-The **Incident Diagnosis Agent** is now ready. It can be invoked directly or through the Supervisor Agent to analyze logs and recommend remediation steps.
-
----
 
 ### The Server Status Agent
 
