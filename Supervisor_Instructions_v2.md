@@ -323,7 +323,39 @@ This tool provides the functionality for the agent to send emails via the Outloo
 
 #
 #
-#
+### Jira Agent
+
+The **Jira Agent** automates the process of creating Jira tickets for incidents or operational tasks and notifying stakeholders by email.
+
+---
+
+## Purpose
+- Create and manage Jira tickets automatically.  
+- Send notification emails to stakeholders when tickets are created or updated.  
+---
+
+## Tools Used
+- **Jira Tool** → for creating and managing Jira tickets.  
+- **Outlook Email Tool** → for sending email notifications.  
+
+---
+
+## Usage
+Typical request example:  
+
+> "Open a Jira ticket for a site outage in Denver and notify the team."
+
+The agent will:  
+1. Create the ticket in Jira with the relevant details.  
+2. Draft and send an email notification to the specified recipients, including the **ticket ID** and **summary**.  
+
+---
+
+## Behavior
+- ✅ Confirms ticket details (**title, description, priority, assignee**) before submitting.  
+- ✅ Captures **ticket ID** and link after creation.  
+- ✅ Generates an email with subject
+
 
 > **WXO ADK CLI option:** You can import the tool from the ADK CLI by running the following commands in your terminal.
 >- Run: `orchestrate tools import -k openapi -f wxo_assets/tools/outlook_email_openapi.json`  
