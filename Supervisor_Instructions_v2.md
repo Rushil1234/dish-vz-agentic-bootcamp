@@ -323,39 +323,6 @@ This tool provides the functionality for the agent to send emails via the Outloo
 
 #
 #
-### Jira Agent
-
-The **Jira Agent** automates the process of creating Jira tickets for incidents or operational tasks and notifying stakeholders by email.
-
----
-
-## Purpose
-- Create and manage Jira tickets automatically.  
-- Send notification emails to stakeholders when tickets are created or updated.  
----
-
-## Tools Used
-- **Jira Tool** → for creating and managing Jira tickets.  
-- **Outlook Email Tool** → for sending email notifications.  
-
----
-
-## Usage
-Typical request example:  
-
-> "Open a Jira ticket for a site outage in Denver and notify the team."
-
-The agent will:  
-1. Create the ticket in Jira with the relevant details.  
-2. Draft and send an email notification to the specified recipients, including the **ticket ID** and **summary**.  
-
----
-
-## Behavior
-- ✅ Confirms ticket details (**title, description, priority, assignee**) before submitting.  
-- ✅ Captures **ticket ID** and link after creation.  
-- ✅ Generates an email with subject
-
 
 > **WXO ADK CLI option:** You can import the tool from the ADK CLI by running the following commands in your terminal.
 >- Run: `orchestrate tools import -k openapi -f wxo_assets/tools/outlook_email_openapi.json`  
@@ -403,6 +370,8 @@ This agent definition links the Communications Agent with the `outlook_email` to
       - Respond only with the information requested.
       ```
 
+
+
      2. [Writing Behaviours](https://developer.watson-orchestrate.ibm.com/getting_started/guidelines#writing-instructions-for-agents): Next, we scroll down to the **Behavior** section. It is crucial to provide instructions to let agents perform effectively. It decides the behavior of the agent and provides context for how to use its tools and agents.
 
 
@@ -437,6 +406,43 @@ Define agents in clear YAML or JSON files, create custom Python tools, and manag
   - Run `orchestrate models list` to see all the available LLMs you can assign to agents. 
   - Read the documentation to get a better understanding https://developer.watson-orchestrate.ibm.com/getting_started/what_is
 
+### Jira Agent
+
+The **Jira Agent** automates the process of creating Jira tickets for incidents or operational tasks and notifying stakeholders by email.
+
+---
+
+## Purpose
+- Create and manage Jira tickets automatically.  
+- Send notification emails to stakeholders when tickets are created or updated.  
+---
+
+## Tools Used
+- **Jira Tool** → for creating and managing Jira tickets.  
+- **Outlook Email Tool** → for sending email notifications.  
+
+---
+1. Navigate to the Agent Builder tab.
+        ![alt text](images/wxo_homepage.png)
+2. Import the Open API Spec **All Tools → Create tool → Import an external tool → Upload the OpenAPI (wxo_assets/tools/outlook_email_openapi.json) → Select the "Send Email Outlook" operation → Done**
+      ![alt text](images/wxo_tool1.png)
+      ![alt text](images/wxo_tool2.png)
+      ![alt text](images/wxo_tool3.png)
+## Usage
+Typical request example:  
+
+> "Open a Jira ticket for a site outage in Denver and notify the team."
+
+The agent will:  
+1. Create the ticket in Jira with the relevant details.  
+2. Draft and send an email notification to the specified recipients, including the **ticket ID** and **summary**.  
+
+---
+
+## Behavior
+- ✅ Confirms ticket details (**title, description, priority, assignee**) before submitting.  
+- ✅ Captures **ticket ID** and link after creation.  
+- ✅ Generates an email with subject
 
 ### The Incident Diagnosis Agent
 
