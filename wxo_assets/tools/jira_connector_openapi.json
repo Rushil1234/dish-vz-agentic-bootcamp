@@ -1,0 +1,390 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Dish Network JIRA Connector API",
+        "description": "API for creating and managing JIRA issues for Dish Network NOC operations",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://your-instance.atlassian.net/rest/api/3",
+            "description": "JIRA Cloud REST API endpoint"
+        }
+    ],
+    "paths": {
+        "/jira/manage-issue": {
+            "post": {
+                "summary": "Manage JIRA Issue",
+                "description": "Create, update, close, or query JIRA issues for network outages",
+                "operationId": "manage_jira_issue",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "action",
+                                    "severity_level",
+                                    "outage_type",
+                                    "affected_nodes"
+                                ],
+                                "properties": {
+                                    "action": {
+                                        "type": "string",
+                                        "enum": ["create", "update", "close", "query"],
+                                        "description": "Action to perform on the JIRA issue"
+                                    },
+                                    "severity_level": {
+                                        "type": "string",
+                                        "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"],
+                                        "description": "Severity level of the incident"
+                                    },
+                                    "outage_type": {
+                                        "type": "string",
+                                        "enum": ["satellite", "ground", "fiber", "power", "equipment"],
+                                        "description": "Type of outage affecting the network"
+                                    },
+                                    "affected_nodes": {
+                                        "oneOf": [
+                                            {
+                                                "type": "integer",
+                                                "minimum": 1
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ],
+                                        "description": "Number of affected network nodes or customers"
+                                    },
+                                    "issue_key": {
+                                        "type": "string",
+                                        "pattern": "^[A-Z]+-[0-9]+$",
+                                        "description": "Existing JIRA issue key (required for update/close actions, e.g., NOC-123)"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "maxLength": 5000,
+                                        "description": "Detailed issue description"
+                                    },
+                                    "customer_impact": {
+                                        "type": "string",
+                                        "maxLength": 2000,
+                                        "description": "Description of customer impact"
+                                    },
+                                    "location": {
+                                        "type": "string",
+                                        "maxLength": 500,
+                                        "description": "Geographic location or network area affected"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "JIRA issue operation completed successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "jira_status": {
+                                            "type": "string",
+                                            "enum": ["created", "updated", "closed", "queried", "error"]
+                                        },
+                                        "issue_details": {
+                                            "type": "object",
+                                            "properties": {
+                                                "issue_key": {
+                                                    "type": "string"
+                                                },
+                                                "issue_url": {
+                                                    "type": "string",
+                                                    "format": "uri"
+                                                },
+                                                "summary": {
+                                                    "type": "string"
+                                                },
+                                                "status": {
+                                                    "type": "string"
+                                                },
+                                                "priority": {
+                                                    "type": "string"
+                                                },
+                                                "assignee": {
+                                                    "type": "string"
+                                                },
+                                                "created": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                },
+                                                "updated": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                }
+                                            }
+                                        },
+                                        "operation_info": {
+                                            "type": "object",
+                                            "properties": {
+                                                "action_performed": {
+                                                    "type": "string"
+                                                },
+                                                "timestamp": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                },
+                                                "jira_instance": {
+                                                    "type": "string"
+                                                },
+                                                "project_key": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request - invalid parameters or missing required fields",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "jira_status": {
+                                            "type": "string",
+                                            "enum": ["error"]
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        },
+                                        "error_details": {
+                                            "type": "object",
+                                            "properties": {
+                                                "field": {
+                                                    "type": "string"
+                                                },
+                                                "message": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized - invalid JIRA credentials",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "jira_status": {
+                                            "type": "string",
+                                            "enum": ["error"]
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "enum": ["authentication_failed"]
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "JIRA issue not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "jira_status": {
+                                            "type": "string",
+                                            "enum": ["error"]
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "enum": ["issue_not_found"]
+                                        },
+                                        "issue_key": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error or JIRA API error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "jira_status": {
+                                            "type": "string",
+                                            "enum": ["error"]
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        },
+                                        "timestamp": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "jira_error": {
+                                            "type": "object",
+                                            "properties": {
+                                                "code": {
+                                                    "type": "string"
+                                                },
+                                                "message": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/jira/issue/{issueKey}": {
+            "get": {
+                "summary": "Get JIRA Issue Details",
+                "description": "Retrieve details of a specific JIRA issue",
+                "operationId": "get_jira_issue",
+                "parameters": [
+                    {
+                        "name": "issueKey",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "^[A-Z]+-[0-9]+$"
+                        },
+                        "description": "JIRA issue key (e.g., NOC-123)"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "JIRA issue details retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JiraIssueDetails"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "JIRA issue not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "SeverityLevel": {
+                "type": "string",
+                "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"]
+            },
+            "OutageType": {
+                "type": "string",
+                "enum": ["satellite", "ground", "fiber", "power", "equipment"]
+            },
+            "JiraAction": {
+                "type": "string",
+                "enum": ["create", "update", "close", "query"]
+            },
+            "JiraIssueDetails": {
+                "type": "object",
+                "properties": {
+                    "issue_key": {
+                        "type": "string"
+                    },
+                    "summary": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "priority": {
+                        "type": "string"
+                    },
+                    "assignee": {
+                        "type": "string"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "labels": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "ErrorResponse": {
+                "type": "object",
+                "properties": {
+                    "error": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "timestamp": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "basicAuth": {
+                "type": "http",
+                "scheme": "basic",
+                "description": "JIRA API uses Basic Authentication with email and API token"
+            }
+        }
+    },
+    "security": [
+        {
+            "basicAuth": []
+        }
+    ]
+}

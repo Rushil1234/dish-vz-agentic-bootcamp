@@ -1,0 +1,181 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Dish Network Email Notification API",
+        "description": "API for sending email notifications for Dish Network NOC incidents and outages",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://your-email-api-server.com",
+            "description": "Email notification service endpoint"
+        }
+    ],
+    "paths": {
+        "/email/outage-notification": {
+            "post": {
+                "summary": "Send Outage Notification Email",
+                "description": "Send real email notification for network outage incidents",
+                "operationId": "send_outage_notification",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "severity_level",
+                                    "outage_type",
+                                    "affected_nodes"
+                                ],
+                                "properties": {
+                                    "severity_level": {
+                                        "type": "string",
+                                        "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"],
+                                        "description": "Severity level of the outage"
+                                    },
+                                    "outage_type": {
+                                        "type": "string",
+                                        "enum": ["satellite", "ground", "fiber", "power", "equipment"],
+                                        "description": "Type of outage affecting the network"
+                                    },
+                                    "affected_nodes": {
+                                        "type": "integer",
+                                        "minimum": 1,
+                                        "description": "Number of affected network nodes or customers"
+                                    },
+                                    "recipient_email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "description": "Email address to send notification to (optional, uses default if not provided)"
+                                    },
+                                    "incident_number": {
+                                        "type": "string",
+                                        "description": "ServiceNow or incident tracking number if available"
+                                    },
+                                    "include_details": {
+                                        "type": "boolean",
+                                        "default": true,
+                                        "description": "Whether to include detailed technical information in the email"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Email sent successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "notification_status": {
+                                            "type": "string",
+                                            "enum": ["sent", "failed", "error"]
+                                        },
+                                        "email_details": {
+                                            "type": "object",
+                                            "properties": {
+                                                "subject": {
+                                                    "type": "string"
+                                                },
+                                                "recipient": {
+                                                    "type": "string"
+                                                },
+                                                "priority": {
+                                                    "type": "string"
+                                                },
+                                                "timestamp": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                },
+                                                "message_id": {
+                                                    "type": "string"
+                                                },
+                                                "incident_number": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "delivery_info": {
+                                            "type": "object",
+                                            "properties": {
+                                                "delivery_method": {
+                                                    "type": "string"
+                                                },
+                                                "delivery_status": {
+                                                    "type": "string"
+                                                },
+                                                "sender": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request - invalid parameters",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "notification_status": {
+                                            "type": "string",
+                                            "enum": ["error"]
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        },
+                                        "timestamp": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "SeverityLevel": {
+                "type": "string",
+                "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"]
+            },
+            "OutageType": {
+                "type": "string",
+                "enum": ["satellite", "ground", "fiber", "power", "equipment"]
+            }
+        }
+    }
+}
