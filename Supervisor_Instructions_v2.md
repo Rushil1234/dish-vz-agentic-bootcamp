@@ -170,7 +170,7 @@ In this lab, we will configure a set of 4 agents and 1 supervisor agent inside *
 ##### Communications Agent  
 - **Purpose**: Drafts professional and concise email updates for internal or external stakeholders about incidents or operational changes.  
 - **Tooling**: This agent integrates with **Outlook** using an imported **OpenAPI JSON tool**, which enables it to send notification emails automatically.  
-- **Usage**: When the Supervisor requests an incident update for the “Los Angeles Verizon Network team,” this agent generates the email body and sends it through Outlook. 
+- **Usage**: When the Supervisor requests an incident update for the “Dish Network team,” this agent generates the email body and sends it through Outlook. 
 
 ##### Incident Diagnosis Agent  
 - **Purpose**: Analyzes incident logs, identifies the most likely **root cause**, and recommends a **resolution plan**.  
@@ -181,7 +181,7 @@ In this lab, we will configure a set of 4 agents and 1 supervisor agent inside *
 ##### Server Status Agent  
 - **Purpose**: Verifies whether a specific server or URL is currently online and reachable.  
 - **Tools**: Uses a server check tool to confirm availability.  
-- **Usage**: Handles requests like “Check if verizon.com is up.”  
+- **Usage**: Handles requests like “Check if dish.com is up.”  
  
 
 ##### Supervisor Agent  
@@ -249,7 +249,7 @@ In this lab, it **does not use a knowledge base**. Instead, it calls a `get_data
         - If you're in a shared WXO instance remember to make your name is unique.  
      4. Add a description for your agent. 
          - [Writing Descriptions](https://developer.watson-orchestrate.ibm.com/getting_started/guidelines#writing-descriptions-for-agents): It is necessary to provide well-crafted descriptions for your agents. These descriptions are used by supervisor agents to determine how to route user requests. It helps the agent decide when to consume this agent as a collaborator when it is added to the agent’s collaborator list. 
-         - `The Network Status Agent specializes in answering inquiries about the current operational status of Verizon’s network. It has access to up-to-date data about nodes sites, and services—such as cell towers, routers, and backhaul links—summarizes ongoing incidents, and provides a concise overview to the user.`
+         - `The Network Status Agent specializes in answering inquiries about the current operational status of dish’s network. It has access to up-to-date data about nodes sites, and services—such as cell towers, routers, and backhaul links—summarizes ongoing incidents, and provides a concise overview to the user.`
       5. Click Create
 
    - Take some time to fully Explore the Agent screen
@@ -264,7 +264,7 @@ In this lab, it **does not use a knowledge base**. Instead, it calls a `get_data
    - Lastly we must add instructions for our agent. This will explain to the LLM what to do, and how to utilize its tools to acomplish the goal.
      1. Scroll down to the **Behavior** section and add the following instructions.
       ```
-      - Answer questions about the operational status of Verizon’s network based on the provided site and node data.This includes information about nodes, incidents, and overall health of regions or specific locations. 
+      - Answer questions about the operational status of dish’s network based on the provided site and node data.This includes information about nodes, incidents, and overall health of regions or specific locations. 
       - Provide your answer as a concise summary. If a location, site ID, or region is mentioned, filter your response accordingly.
       ```
      2. [Writing Behaviours](https://developer.watson-orchestrate.ibm.com/getting_started/guidelines#writing-instructions-for-agents): Next, we scroll down to the **Behavior** section. It is crucial to provide instructions to let agents perform effectively. It decides the behavior of the agent and provides context for how to use its tools and agents.
@@ -620,7 +620,7 @@ This binds the **Server Status Agent** to the `check_server_status` tool you jus
 > **Console option (SaaS):** Go to **Agents → Add agent**, upload `wxo_assets/agents/server_status_agent.yaml`, then save.
 
 #### 3) Quick sanity checks
-- Ask: “Check if verizon.com is up.”  
+- Ask: “Check if dish.com is up.”  
 - The agent should call the `check_server_status` tool and return whether the server is reachable.  
 - If no response or an error occurs, confirm the tool is present and correctly linked to the agent.
 
@@ -674,7 +674,7 @@ These must match the exact agent names you imported earlier. If names differ, up
 #### 3) Quick sanity checks (routing behavior)
 Try these natural-language prompts to validate routing:
 - “**What’s the status of site S002?**” → should route to **Network Status Agent** (calls `get_data`)
-- “**Check if verizon.com is up.**” → should route to **Server Status Agent** (calls `check_server_status`)
+- “**Check if dish.com is up.**” → should route to **Server Status Agent** (calls `check_server_status`)
 - “**Here’s an incident log… what’s the root cause and fix?**” → should route to **Incident Diagnosis Agent** (uses `diagnose_incident_log`, consults resolution guides if configured)
 - “**Draft an email to the LA network team that the incident is resolved.**” → should route to **Communications Agent** (and can send via Outlook if configured)
 
